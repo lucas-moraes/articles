@@ -1,0 +1,87 @@
+name: Minify and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Instalar minificadores
+      - name: Install minifiers (CSS + JS)
+        run: |
+          sudo npm install -g css-minify terser
+
+      # Criar pasta final
+      - name: Create dist folder
+        run: mkdir dist
+
+      # Copiar todos os arquivos para dist
+      - name: Copy all project files
+        run: |
+         shopt -s dotglob
+         for item in *; do
+          if [ "$item" != "dist" ]; then
+            cp -R "$item" dist/
+          fi
+         done
+
+      - name: Minify CSS and create .min.css
+        run: |
+          if [ -d "dist/css" ]; then
+            for file in dist/css/*.css; do
+              css-minify -f "$file" -o dist/css
+              rm "$file"
+            done
+          fi
+
+      # Minificar JS (se existir)
+      - name: Minify JS folder
+        run: |
+          if [ -d "dist/js" ]; then
+            for file in dist/js/*.js; do
+              terser "$file" -c -m -o dist/js
+              rm "$file"
+            done
+          fi
+
+      - name: Update index.html references
+        run: |
+          if [ -f dist/index.html ]; then
+            # CSS
+            sed -i 's|css/\(.*\).css|css/\1.min.css|g' dist/index.html
+            # JS
+            sed -i 's|js/\(.*\).js|js/\1.min.js|g' dist/index.html
+          fi
+
+      # Subir artefato
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
