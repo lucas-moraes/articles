@@ -50,13 +50,39 @@ jobs:
           fi
 
       # Minificar JS (se existir)
-      - name: Minify JS folder
+      - name: Minify JS files and create .min.js
         run: |
+          # 1. Verifica se a pasta dist/js existe
           if [ -d "dist/js" ]; then
-            for file in dist/js/*.js; do
-              terser "$file" -c -m -o dist/js
-              rm "$file"
+            echo "Minifying JavaScript files in dist/js..."
+            
+            # 2. Itera sobre cada arquivo .js
+            for original_file in dist/js/*.js; do
+              # Verifica se o arquivo é válido (importante se não houver .js na pasta)
+              if [ -f "$original_file" ]; then
+                 w
+                # 3. CRIA O NOME DO ARQUIVO DE SAÍDA .min.js
+                # Usa substituição de string: substitui '.js' no final por '.min.js'
+                output_file="${original_file/.js/.min.js}"
+                
+                echo "Processing: $original_file -> $output_file"
+                
+                # 4. EXECUTA O TERSER
+                # -o: define o novo nome do arquivo (.min.js)
+                terser "$original_file" -c -m -o "$output_file"
+                
+                # 5. REMOVE O ARQUIVO ORIGINAL SOMENTE SE O TERSER FOI BEM-SUCEDIDO
+                if [ $? -eq 0 ]; then
+                  rm "$original_file"
+                  echo "Original file removed: $original_file"
+                else
+                  echo "❌ Error minifying $original_file. Original file kept."
+                  exit 1 # Força a falha do passo no CI/CD se a minificação falhar
+                fi
+              fi
             done
+          else
+            echo "dist/js folder not found. Skipping minification."
           fi
 
       - name: Update index.html references
@@ -73,7 +99,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-
 
   deploy:
     runs-on: ubuntu-latest
