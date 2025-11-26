@@ -27,6 +27,12 @@ body {
   transition: background 2s ease-in-out;
 }
 
+#root {
+  max-width: 800px;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
 .light-gradient {
   background-color: hsla(165, 0%, 100%, 1);
   background-image:

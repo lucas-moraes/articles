@@ -8,12 +8,24 @@ const fetchAndDecodeArticle = async (filename) => {
     if (!resp.ok) throw new Error(`HTTP Error: ${resp.status}`);
 
     const data = await resp.json();
-    const decodedContent = atob(data.content);
+
+    const base64String = data.content;
+
+    const binaryString = atob(base64String);
+
+    const markdownContent = decodeURIComponent(
+      Array.prototype.map
+        .call(binaryString, function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join(""),
+    );
+
+    const htmlContent = marked.parse(markdownContent);
 
     window.appRoot.innerHTML = `
         <a onclick="router()">Voltar para a Lista</a>
-        <h2>${filename}</h2>
-        <pre>${decodedContent}</pre>
+        <div class="article-content">${htmlContent}</div>
     `;
   } catch (error) {
     console.error(`Error fetching article ${filename}:`, error);
