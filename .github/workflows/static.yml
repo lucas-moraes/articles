@@ -50,49 +50,63 @@ jobs:
           fi
 
       # Minificar JS (se existir)
-      - name: Minify JS files and create .min.js
+      - name: Minify JS files in dist/js
         run: |
-          # 1. Verifica se a pasta dist/js existe
+          # 1. Verifica se a pasta dist/js existe e contém arquivos .js
           if [ -d "dist/js" ]; then
             echo "Minifying JavaScript files in dist/js..."
             
-            # 2. Itera sobre cada arquivo .js
-            for original_file in dist/js/*.js; do
-              # Verifica se o arquivo é válido (importante se não houver .js na pasta)
+            # 2. Itera sobre todos os arquivos .js dentro da pasta dist/js
+            # Usamos find para garantir que o loop funcione corretamente.
+            find dist/js -maxdepth 1 -name "*.js" | while read original_file; do
               if [ -f "$original_file" ]; then
-                 w
-                # 3. CRIA O NOME DO ARQUIVO DE SAÍDA .min.js
-                # Usa substituição de string: substitui '.js' no final por '.min.js'
+                
+                # 3. Define o caminho de saída (.min.js)
+                # Sintaxe robusta para substituir a extensão '.js' por '.min.js'
                 output_file="${original_file/.js/.min.js}"
                 
                 echo "Processing: $original_file -> $output_file"
-                
+                  
                 # 4. EXECUTA O TERSER
-                # -o: define o novo nome do arquivo (.min.js)
                 terser "$original_file" -c -m -o "$output_file"
-                
-                # 5. REMOVE O ARQUIVO ORIGINAL SOMENTE SE O TERSER FOI BEM-SUCEDIDO
+                  
                 if [ $? -eq 0 ]; then
+                  # 5. REMOVE O ARQUIVO ORIGINAL
                   rm "$original_file"
                   echo "Original file removed: $original_file"
                 else
-                  echo "❌ Error minifying $original_file. Original file kept."
-                  exit 1 # Força a falha do passo no CI/CD se a minificação falhar
+                  echo "❌ Error minifying $original_file."
+                  exit 1 # Força a falha
                 fi
               fi
             done
+            echo "Minification step complete."
           else
-            echo "dist/js folder not found. Skipping minification."
+            echo "A pasta dist/js não existe. Pulando minificação JS."
           fi
 
       - name: Update index.html references
         run: |
           if [ -f dist/index.html ]; then
-            # CSS
+            # 1. Ajustar referências CSS (Se houver)
             sed -i 's|css/\(.*\).css|css/\1.min.css|g' dist/index.html
-            # JS
-            sed -i 's|js/\(.*\).js|js/\1.min.js|g' dist/index.html
+            
+            # 2. AJUSTE JS: Troca todas as referências src="./nome.js" por src="./nome.min.js"
+            # O ponto (.) é importante para referências relativas
+            sed -i 's|\.\/\(.*\).js|\.\/\1.min.js|g' dist/index.html
+            echo "index.html references updated to use .min.js"
           fi
+
+      - name: Criar 404.html para Fallback da SPA
+        run: |
+          # Este 404.html garante que qualquer URL que o servidor não encontrar (ex: /articles/1)
+          # seja redirecionada para a raiz, onde o seu roteador SPA assume o controle.
+          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><script>' > dist/404.html
+          echo 'var path = window.location.pathname;' >> dist/404.html
+          echo 'sessionStorage.setItem("redirect", path);' >> dist/404.html
+          echo 'window.location.replace("/");' >> dist/404.html
+          echo '</script></head><body>Redirecionando...</body></html>' >> dist/404.html
+          echo "Arquivo 404.html criado na pasta dist para Fallback da SPA."
 
       # Subir artefato
       - name: Upload artifact
