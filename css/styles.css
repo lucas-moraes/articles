@@ -66,3 +66,73 @@ body {
   font-style: normal;
   text-transform: capitalize;
 }
+
+pre,
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+pre {
+  background: #0f1724;
+  color: #dbeafe;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow: auto;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+pre .language-label {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e6f1ff;
+}
+
+pre > code.language-javascript {
+  display: block;
+  white-space: pre;
+  background: transparent;
+}
+
+/* ===== Inline code ===== */
+code.inline-js {
+  background: rgba(14, 23, 38, 0.8);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Syntax Highlighting básico ===== */
+.token.comment {
+  color: #7c8796;
+  font-style: italic;
+}
+.token.keyword {
+  color: #ffb86b;
+  font-weight: 600;
+}
+.token.function {
+  color: #7ee787;
+}
+.token.string {
+  color: #f6adcc;
+}
+.token.number {
+  color: #9be7ff;
+}
+.token.operator {
+  color: #cde4ff;
+}
+.token.punctuation {
+  color: #b7c8e8;
+}
