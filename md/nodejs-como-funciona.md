@@ -6,6 +6,9 @@ NodeJS não é uma linguagem de programação nem um framework, mas sim um ambie
 
 ### Características principais do NodeJS
 
+<details>
+<summary>Características principais do NodeJS</summary>
+
 - **Ambiente de execução**: Ele utiliza o motor v8 do google (o mesmo usado no navegador do chrome) para interpretar e executar o código JavaScript de forma rápida de um navegador web.
 - **Back-end com JavaScript**: Permite usar a mesma linguagem , o JavaScript, tanto para o front-end quanto para o back-end, facilitandp o desenvolvimento full-stack.
 - **Arquitetura assincrona e orientada a eventos**:
@@ -35,10 +38,8 @@ console.log('1. INÍCIO do programa.');
 fs.readFile('arquivo1.txt', 'utf8', (err, data) => {
 if (err) throw err;
 console.log('4. DADOS DO ARQUIVO 1 LIDOS.');
-
-    // Esta função (callback) será executada SOMENTE quando o Thread
-    Pool avisar que a leitura terminou.
-
+// Esta função (callback) será executada SOMENTE quando o Thread
+//Pool avisar que a leitura terminou.
 });
 
 // --- Operação Assíncrona 2 (Não Bloqueante) ---
@@ -70,3 +71,4 @@ Order de execução:
 ![Image](https://github.com/user-attachments/assets/4b07e31f-7942-431c-9f56-cf9d546bc3dd)
 
 - **NPM (Node Package Manager)**: Possui o maior ecossistema de bibliotecas de código do mundo, o npm, que facilita a instalação, o compartilhamento e o gerenciamneto de módulos e pacotes reutilizáveis.
+</details>
