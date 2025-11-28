@@ -1,91 +1,23 @@
-# 🌟 Documento de Demonstração de Markdown
+# NodeJS como funciona
 
-## 📌 1. Introdução à Formatação
+### Introdução
+NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor. 
 
-Este documento serve como um guia rápido para demonstrar todas as funcionalidades mais **importantes** e _comuns_ do Markdown.
-
-> **Citação em Bloco:**
-> "A sintaxe Markdown foi criada para ser a mais legível e discreta possível."
-> — John Gruber
-
----
-
-### 2. Ênfase e Estilização
-
-Você pode combinar diferentes tipos de ênfase, como:
-
-- **Negrito:** Use `**asteriscos duplos**` ou `__underline duplo__`.
-- _Itálico:_ Use `*um asterisco*` ou `_um underline_`.
-- **_Negrito e Itálico:_** Use `***três asteriscos***`.
-- ~~Riscado:~~ Use `~~dois tils~~`.
-- `Código Inline`: Use um único acento grave `` `código` `` para comandos ou nomes de variáveis.
-
----
-
-### 3. Listas (Não Ordenadas e Ordenadas)
-
-#### Lista Não Ordenada
-
-Use asteriscos (`*`), hífens (`-`) ou sinais de adição (`+`):
-
-- Primeiro item da lista
-  - Sub-item recuado (use dois espaços antes do marcador)
-  - Outro sub-item.
-- Segundo item
-
-* Terceiro item
-
-#### Lista Ordenada
-
-Use números seguidos por um ponto. O número real não importa, o Markdown irá corrigir a ordem:
-
-1.  Primeira Etapa
-2.  Segunda Etapa
-3.  Terceira Etapa.
-
----
-
-### 4. Links e Imagens
-
-#### Link Inline
-
-Para um [link de texto-âncora], use a sintaxe `[texto](URL)`:
-
-Visite a documentação oficial do [GitHub Flavored Markdown](https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-#### Imagem
-
-A sintaxe é semelhante a um link, mas com um ponto de exclamação (`!`) na frente: `![Texto Alt da Imagem](URL_da_imagem)`:
-
-![Logotipo Genérico](https://via.placeholder.com/150x50?text=LOGO+AQUI)
-
----
-
-### 5. Tabelas
-
-Tabelas são ótimas para organizar dados. Use barras (`|`) e hífens (`-`) para estruturá-las:
-
-| Cabeçalho A (Alinhado à Esquerda) | Cabeçalho B (Centralizado) | Cabeçalho C (Alinhado à Direita) |
-| :-------------------------------- | :------------------------: | -------------------------------: |
-| Dado 1                            |           Dado 4           |                           Dado 7 |
-| Dado 2                            |           Dado 5           |                           Dado 8 |
-| Dado 3                            |           Dado 6           |                           Dado 9 |
-
----
-
-### 6. Blocos de Código (Code Fences)
-
-Para blocos de código longos, use três acentos graves (```) e, opcionalmente, especifique a linguagem para _syntax highlighting_:
-
-```javascript
-// Exemplo de código JavaScript para saudação
-function greet(name) {
-  if (name) {
-    return "Olá, " + name + "!";
-  } else {
-    // Lançando um erro, como em um ticket de bug!
-    throw new Error("Nome é obrigatório.");
-  }
-}
-greet("Usuário Markdown");
-```
+### Características principais do NodeJS
+- **Ambiente de execução**: Ele utiliza o motor v8 do google (o mesmo usado no navegador do chrome) para interpretar e executar o código JavaScript de forma rápida de um navegador web.
+- **Back-end com JavaScript**: Permite usar a mesma linguagem , o JavaScript, tanto para o front-end quanto para o back-end, facilitandp o desenvolvimento full-stack.
+- **Arquitetura assincrona e orientada a eventos**:
+  - Sua principal característica é a **arquitetura não bloqueante** (non-bloquing I/O) e o uso de um Event loop (Single-thred).
+  - Isso significa que, em vez de esperar por operações demoradas (como acesso a banco de dados ou arquivos), o NodeJS as coloca em segundo plano e continua processando outras requisições.Quando a operação demorada é concluída, ele é notificado por um evento.
+  - Essa abordagem o torna muito eficiente para aplicações que exigem **escalabilidade** e **tempo real**, lidando com um grande número de conexões simultâneas (como chats, jogos multiplayer e APIs).
+  - O segredo está em como o NodeJS lida com as operações de Entrada e Saída (I/O), que são as mais lentas (acesso a banco de dados, leitura/escrita de arquivos, requisições de rede).
+    - **Event Loop (Single Thread)**: é a thread principal onde o seu código JavaScript (JS) é executado. Ele nunca é bloqueado.
+      - Quando o seu código JS precisa iniciar uma operação lenta (Ex: buscar dados no MongoDB), ele **não espera** pelo resultado. Em vez disso, ele passa essa tarefa para o "segundo plano" e imediatamente **continua executando** o próximo pedaço de código JS.
+    - O **segundo plano (Pool de threads em C++)**: é na verdade um conjunto de threads separadas (conhecido como **Thread Pool**), que são mantidas e gerenciadas pela biblioteca **libuv**.
+      - **libuv** e uma biblioteca de código aberto, escrita em C/C++, que faz parte do coração do NodeJS.
+      - Quando o Event Loop encontra uma operação de I/O bloqueante (como a leitura de um arquivo no disco), ele a delega para uma das threads nesse **Thread Pool** da libuv.
+      - Essas threads C++ executam a operação demorada de forma sícrona, fora da thread principal do NodeJS.
+      - Uma vez que a operação é concluída (o aruqivo foi lido ou o dado do banco de dados foi recuperado), a thread C++ envia uma notificação de evento de volta ao Event Loop.
+    - **A notificação e o callback**: O event loop recebe a notificação (o "evento"). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex; evibe os dados do banco de dados.)
+- **NPM (Node Package Manager)**: Possui o maior ecossistema de bibliotecas de código do mundo, o npm, que facilita a instalação, o compartilhamento e o gerenciamneto de módulos e pacotes reutilizáveis.
+   

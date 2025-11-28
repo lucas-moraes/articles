@@ -51,7 +51,7 @@ export const listArticles = async () => {
         const title = slug.replace(/-/g, " ");
 
         return `
-              <div class="card" onclick="fetchAndDecodeArticle(${slug})">
+              <div class="card" onclick="fetchAndDecodeArticle('${slug}')">
                   * ${title}
               </div>
          `;
