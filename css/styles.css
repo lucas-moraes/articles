@@ -45,3 +45,24 @@ body {
     radial-gradient(circle at 100% 0%, hsla(234.26470588235304, 100%, 50%, 0.35) 3%, transparent 40%);
   background-blend-mode: overlay, normal, normal, normal, normal, normal, normal;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.card {
+  background: #ffffffcc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  font-family: "Homemade Apple", cursive;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: capitalize;
+}

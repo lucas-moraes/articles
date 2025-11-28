@@ -46,13 +46,12 @@ export const listArticles = async () => {
     const fileListHTML = articleFiles
       .map((file) => {
         const slug = file.name.replace(".md", "");
+        const title = slug.replace(/-/g, " ");
 
         return `
-              <li>
-                <a onclick="fetchAndDecodeArticle(${slug})">
-                  ${file.name}
-                </a>
-              </li>
+              <div class="card" onclick="fetchAndDecodeArticle(${slug})">
+                  * ${title}
+              </div>
          `;
       })
       .join("");
@@ -60,8 +59,7 @@ export const listArticles = async () => {
     return `
         <h1>Articles</h1>
         <p>Select the article:</p>
-        <h2>Artigos Disponíveis</h2>
-        <ul>${fileListHTML}</ul>
+        <div class="container">${fileListHTML}</div>
     `;
   } catch (error) {
     console.error("Error listing files:", error);

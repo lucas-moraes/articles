@@ -1,4 +1,4 @@
-import { listArticles } from "./global.min.js";
+import { listArticles } from "./global.js";
 
 const appRoot = document.getElementById("root");
 window.appRoot = appRoot;
