@@ -1,7 +1,9 @@
 const FOLDER_URL = "https://api.github.com/repos/lucas-moraes/articles/contents/md";
 
 const fetchAndDecodeArticle = async (filename) => {
-  const ARTICLE_URL = `${FOLDER_URL}/${filename}.md`;
+  const ARTICLE_URL = `${FOLDER_URL}/${String(filename)}.md`;
+
+  console.log(`=>`, ARTICLE_URL);
 
   try {
     const resp = await fetch(ARTICLE_URL);
