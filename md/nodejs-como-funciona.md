@@ -25,8 +25,7 @@ ___
       - Uma vez que a operação é concluída (o aruqivo foi lido ou o dado do banco de dados foi recuperado), a thread C++ envia uma notificação de evento de volta ao Event Loop.
     - **A notificação e o callback**: O event loop recebe a notificação (o "evento"). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex; evibe os dados do banco de dados.)
 - Exemplo de código:
-<pre>
-<code class="language-javscript">
+<code>
 const fs = require('fs'); // Módulo nativo para operações de Sistema de Arquivos
 
 console.log('1. INÍCIO do programa.');
@@ -66,7 +65,6 @@ Order de execução:
 5. DADOS DO ARQUIVO 2 LIDOS.
 
 </code>
-</pre>
 
 ![Image](https://github.com/user-attachments/assets/4b07e31f-7942-431c-9f56-cf9d546bc3dd)
 
