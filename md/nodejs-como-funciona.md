@@ -118,13 +118,13 @@ O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execu�
 - O ciclo de vida do Event loop
   - O event loop opera em um ciclo contínuo,  passando por várias "fases" para processar diferentes tipos de eventos.</br>
 
-  1. **Timers**: Executa callbacks agendadas por `setTimeout()` e `setinterval()`;
+  1. **Timers**: Executa callbacks agendadas por <code>setTimeout()</code> e <code>setinterval()</code>;
      - Exemplo: O código de um `setTimeout(..., 0)` é executado aqui;
   3. **Pending callbacks**: Executa callbacks pendentes do sistema (exceto I/O, timers, e `close` callbacks);
      - Exemplo: Error de rede (se o SO disparar o erro);
   5. **Idle, Prepare**: Usado apenas internamente pelo NodeJS;
      - Exemplo: N/A
-     - <b>Obs</b>: Essas fases são destinadas ã execução de código assíncrono escrito pelo usuário (como timers ou callbacks de I/O).
+     - <b>Obs</b>: Essas fases não são destinadas à execução de código assíncrono escrito pelo usuário (como timers ou callbacks de I/O).
      - Fase `Prepare`:
         - <ins>Função</ins>: É executada <b>antes</b> que o Event loop inicie seu próximo ciclo principal de I/O, que é a fase <b>Poll</b> (onde a maioria das callbacks de I/O são processadas);
         - <ins>Uso interno</ins>: Seu principal objetivo é praparar a Libuv para receber novos eventos de I/O. Ela pode ser usada internamente para limpar ou resetar estruturas de dados antes que a Libuv comece a procurar ativamente por eventos concluídos;
