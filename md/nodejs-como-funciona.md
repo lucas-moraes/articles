@@ -105,6 +105,7 @@ ___
 
 <details>
 <summary>Libuv e Event loop</summary>
+
 **Libuv: O coração assíncrono do NodeJS**</br>
 A Libuv é uma biblioteca multiplataforma de código aberto, escrita em C, que fornece a camada de abstração para operações de Entrada/Saída (I/O) assíncronas. Ela é o que permite ao NodeJS lidar com operações lentas sem bloquear a thread principal do JavaScript.
 - Funções principais da libuv:
