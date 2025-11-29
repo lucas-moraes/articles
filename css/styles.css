@@ -67,4 +67,20 @@ body {
   text-transform: capitalize;
 }
 
+code {
+background-color: #0a0725;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    color: #00ff28;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 1px 3px 9px 0px #0a0a0ab0;
+}
+
+img {
+    border-radius: 10px;
+    box-shadow: 1px 3px 9px 0px #0a0a0ab0;
+    width: 100%;
+}
 
