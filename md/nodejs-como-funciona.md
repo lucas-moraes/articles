@@ -97,6 +97,8 @@ V8 é um motor de execução de JavaScript de código aberto escrito em c++.</br
     - Quando o GC percebe que um objeto na memória não pode mais ser acessado pelo programa, ele o remove, **liberando a memória** para novos objetos. Isso evita o vazamento de memória e garante que o NodeJS funcione por longos períodos sem falhas.
 - Gerenciamento de Call Stack
   - O V8 mantém o controle da ordem das funções a serem executadas usando a Call Stack. No NodeJS, esta é a pilha que pertence à single thread do **Event Loop**.
+</br>
+</br>
 
   <img width="500" alt="Image" src="https://github.com/user-attachments/assets/1f46b6de-fdea-4b50-b0f3-aa060707ac7b" />
 </details>
@@ -114,35 +116,35 @@ A Libuv é uma biblioteca multiplataforma de código aberto, escrita em C, que f
   - **Thread Pool**: Para operações que são inerentemente bloqueantes nos sitemas operacionais (como a leitura de arquivos muito grandes no disco), a Libuv mantém um **Pool de Threads** separadas. Essas threads nativas (C++) executam o trabalho pesado fora do Event Loop, garantindo que a thread principal do JavaScript continue livre.
 
 **Event Loop: A Single thread orquestradora**</br>
-O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execução do código JavaScript. Ele opera em uma **única thread** e é a razão pela qual o NodeJS é considerado singlre-threaded para a execução do código JS.,/br>
+O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execução do código JavaScript. Ele opera em uma **única thread** e é a razão pela qual o NodeJS é considerado singlre-threaded para a execução do código JS.</br>
 - O ciclo de vida do Event loop
   - O event loop opera em um ciclo contínuo,  passando por várias "fases" para processar diferentes tipos de eventos.</br>
 
-  1. **Timers**: Executa callbacks agendadas por <code>setTimeout()</code> e <code>setinterval()</code>;
-     - Exemplo: O código de um `setTimeout(..., 0)` é executado aqui;
-  3. **Pending callbacks**: Executa callbacks pendentes do sistema (exceto I/O, timers, e `close` callbacks);
+  1. **Timers**: Executa callbacks agendadas por <b>setTimeout()</b> e <b>setinterval()</b>;
+     - Exemplo: O código de um <b>setTimeout(..., 0)</b> é executado aqui;
+  3. **Pending callbacks**: Executa callbacks pendentes do sistema (exceto I/O, timers, e <b>close</b> callbacks);
      - Exemplo: Error de rede (se o SO disparar o erro);
   5. **Idle, Prepare**: Usado apenas internamente pelo NodeJS;
      - Exemplo: N/A
      - <b>Obs</b>: Essas fases não são destinadas à execução de código assíncrono escrito pelo usuário (como timers ou callbacks de I/O).
-     - Fase `Prepare`:
+     - Fase <b>Prepare</b>:
         - <ins>Função</ins>: É executada <b>antes</b> que o Event loop inicie seu próximo ciclo principal de I/O, que é a fase <b>Poll</b> (onde a maioria das callbacks de I/O são processadas);
         - <ins>Uso interno</ins>: Seu principal objetivo é praparar a Libuv para receber novos eventos de I/O. Ela pode ser usada internamente para limpar ou resetar estruturas de dados antes que a Libuv comece a procurar ativamente por eventos concluídos;
-      - fase `Idle`:
-        - <ins>Função</ins>: É executada imefiatamente após a fase `Prepare`. Ela atua como um ponto de interrupção para tarefas de baixa prioridade;
+      - fase <b>Idle</b>:
+        - <ins>Função</ins>: É executada imefiatamente após a fase <b>Prepare</b>. Ela atua como um ponto de interrupção para tarefas de baixa prioridade;
         - <ins>Uso interno</ins>: Ela é usada pela Libuv para executar verificações de rotina ou tarefas de manutenção que não são essenciais para o processamento imediato de eventos, ou que precisam ser executadas somente quando o Event loop está relativamente ocioso (Idle);
   7. **Poll**:
      1. <i>Verifca I/O</i>: Busca novas conexões de rede ou dados lidos de arquivos;
      2. <i><Executa callbacks/i>: Executa as callbacks de I/O que foram concluídas no Thread Pool;
-     - Exemplo: `fs.readFile` calbacks, `neet.Socket` callbacks;
-  8. **Check**: Executa callbacks agendadas por `setImmediate()`;
-     - Exemplo: O código de um `setImmediate()` é executado aqui;
+     - Exemplo: <b>fs.readFile</b> calbacks, <b>neet.Socket</b> callbacks;
+  8. **Check**: Executa callbacks agendadas por <b>setImmediate()</b>;
+     - Exemplo: O código de um <b>setImmediate()</b> é executado aqui;
   9. **Close callbacks**: Executa callbacks para fechamento de handles;
-      - Exemplo: `socket.on('close', ...)`;
+      - Exemplo: <b>socket.on('close', ...)</b>;
 - Microtasks vs Macrotasks
   - Além das fases acima(que são **Macrotasks**), existem as **Microtasks**, que têm prioridade de execução e são processadas imediatamente após a conclusão de uma fase completa do Event loop ou após a execução de uma callback sincrona:
-    - **Microtasks (alta prioridade)**: Incluem **Promises** (`.then()`, `.catch()`, `.finally()`) e `process.nextTick()`
-    - **Regra de ouro**: O NodeJS sem pre esvazia toda a fila de **Microtasks** antes de passar para a próxima fase do **Event loop (Macrotasks)**. O `process.nextTick()` tem a prioridade mais alta de todas, sendo executado antes de qualquer outra Microtask.
+    - **Microtasks (alta prioridade)**: Incluem **Promises** (<b>.then()</b>, <b>.catch()</b>, <b>.finally()</b>) e <b>process.nextTick()</b>
+    - **Regra de ouro**: O NodeJS sem pre esvazia toda a fila de **Microtasks** antes de passar para a próxima fase do **Event loop (Macrotasks)**. O <b>process.nextTick()</b> tem a prioridade mais alta de todas, sendo executado antes de qualquer outra Microtask.
     
 </details>
 
