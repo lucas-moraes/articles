@@ -59,8 +59,13 @@ export const listArticles = async () => {
       .join("");
 
     return `
-        <h1>Articles</h1>
-        <p>Select the article:</p>
+        <div class="articles-header">
+          <h1>Articles</h1>
+          <a href="https://lucas-moraes.github.io/">
+            <span> 🏠 Home</span>
+          </a>
+        </div>
+        <p>Selecione o artigo:</p>
         <div class="container">${fileListHTML}</div>
     `;
   } catch (error) {
