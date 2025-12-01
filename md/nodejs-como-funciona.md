@@ -91,7 +91,7 @@ O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execu�
      - Fase <b>Prepare</b>:
         - <ins>Função</ins>: É executada <b>antes</b> que o Event loop inicie seu próximo ciclo principal de I/O, que é a fase <b>Poll</b> (onde a maioria das callbacks de I/O são processadas);
         - <ins>Uso interno</ins>: Seu principal objetivo é praparar a Libuv para receber novos eventos de I/O. Ela pode ser usada internamente para limpar ou resetar estruturas de dados antes que a Libuv comece a procurar ativamente por eventos concluídos;
-      - fase <b>Idle</b>:
+      - Fase <b>Idle</b>:
         - <ins>Função</ins>: É executada imefiatamente após a fase <b>Prepare</b>. Ela atua como um ponto de interrupção para tarefas de baixa prioridade;
         - <ins>Uso interno</ins>: Ela é usada pela Libuv para executar verificações de rotina ou tarefas de manutenção que não são essenciais para o processamento imediato de eventos, ou que precisam ser executadas somente quando o Event loop está relativamente ocioso (Idle);
   7. **Poll**:
