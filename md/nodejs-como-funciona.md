@@ -111,9 +111,17 @@ O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execu�
 
 ___
 
+<details>
+<summary>Desempenho e Concorrência (Em Desenvolvimento)</summary>
 
+Worker Threads: Uso de threads reais (fora do Event Loop) para realizar tarefas intensivas em CPU (cálculos complexos, criptografia) sem bloquear a thread principal.</br>
+Cluster Module: Técnicas para fork (duplicar) o processo do Node.js, aproveitando múltiplos núcleos da CPU (multiprocessamento) e distribuindo a carga de requisições.</br>
+Benchmarking e Profiling: Uso de ferramentas como node --prof e profilers externos para identificar gargalos de desempenho e vazamentos de memória.</br>
+Otimização do V8: Entender como o motor V8 compila e otimiza o código JavaScript (JIT Compilation) para escrever código mais rápido.</br>
+Stream Processing: Utilização de Streams (Readable, Writable, Duplex) para processar grandes volumes de dados de forma eficiente (em pedaços) sem carregar tudo na memória de uma vez.</br>
+</details>
 
-
+---
 
 
 
