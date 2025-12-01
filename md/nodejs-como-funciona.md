@@ -22,51 +22,12 @@ ___
       - **libuv** e uma biblioteca de código aberto, escrita em C/C++, que faz parte do coração do NodeJS.
       - Quando o Event Loop encontra uma operação de I/O bloqueante (como a leitura de um arquivo no disco), ele a delega para uma das threads nesse **Thread Pool** da libuv.
       - Essas threads C++ executam a operação demorada de forma sícrona, fora da thread principal do NodeJS.
-      - Uma vez que a operação é concluída (o aruqivo foi lido ou o dado do banco de dados foi recuperado), a thread C++ envia uma notificação de evento de volta ao Event Loop.
-    - **A notificação e o callback**: O event loop recebe a notificação (o "evento"). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex; evibe os dados do banco de dados.)
+      - Uma vez que a operação é concluída (o arquivo foi lido ou o dado do banco de dados foi recuperado), a thread C++ envia uma notificação de evento de volta ao Event Loop.
+    - **A notificação e o callback**: O event loop recebe a notificação (o "evento"). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex: exibe os dados do banco de dados.)
 - Exemplo de código:
 
-<code>
+![Image](https://github.com/user-attachments/assets/0f3b149e-3b51-4e0a-b63b-f689aad31bc9)
 
-const fs = require('fs'); // Módulo nativo para operações de Sistema de Arquivos
-
-console.log('1. INÍCIO do programa.');
-
-// --- Operação Assíncrona 1 (Não Bloqueante) --- </br>
-// Node.js inicia a leitura do Arquivo 1 e passa a tarefa para o Thread Pool (libuv). </br>
-// Ele NÃO espera a conclusão e segue imediatamente para a linha seguinte.
-
-fs.readFile('arquivo1.txt', 'utf8', (err, data) => { </br>
-  if (err) throw err; </br>
-  console.log('4. DADOS DO ARQUIVO 1 LIDOS.'); </br>
-  // Esta função (callback) será executada SOMENTE quando o Thread< /br>
-  //Pool avisar que a leitura terminou. </br>
-});
-
-// --- Operação Assíncrona 2 (Não Bloqueante) --- </br>
-// Node.js inicia a leitura do Arquivo 2 e passa a tarefa para o Thread Pool (libuv). </br>
-// Ele NÃO espera a conclusão e segue imediatamente para a linha seguinte.
-
-fs.readFile('arquivo2.txt', 'utf8', (err, data) => { </br>
-  if (err) throw err;</br>
-  console.log('5. DADOS DO ARQUIVO 2 LIDOS.');</br>
-});
-
-// --- Operação Síncrona (Código JS Comum) ---</br>
-// O Event Loop executa este log imediatamente, sem depender das leituras.</br>
-console.log('2. O Event Loop está livre e processando esta linha imediatamente.');
-
-console.log('3. FIM do código principal. O Event Loop aguarda eventos.');
-
-Order de execução:
-
-1. INÍCIO do programa.
-2. O Event Loop está livre e processando esta linha imediatamente.
-3. FIM do código principal. O Event Loop aguarda eventos.
-4. DADOS DO ARQUIVO 1 LIDOS.
-5. DADOS DO ARQUIVO 2 LIDOS.
-
-</code>
 
 ![Image](https://github.com/user-attachments/assets/4b07e31f-7942-431c-9f56-cf9d546bc3dd)
 
