@@ -94,16 +94,16 @@ ___
 
 **Libuv: O coração assíncrono do NodeJS**</br>
 A Libuv é uma biblioteca multiplataforma de código aberto, escrita em C, que fornece a camada de abstração para operações de Entrada/Saída (I/O) assíncronas. Ela é o que permite ao NodeJS lidar com operações lentas sem bloquear a thread principal do JavaScript.
-- Funções principais da libuv:
+</br>
+Funções principais da libuv:
   - **Gerenciamento de I/O assíncrono**: A libuv interage com os sistemas operacionais subjacentes para delegar operações de I/O (como sockets de rede, arquivos e timers) de froma não bloqueante.
   - **Event Loop Implementation**: A Libuv é responsável por implementar e gerenciar o Event Loop em si, atuando como o orquestrador central.
   - **Thread Pool**: Para operações que são inerentemente bloqueantes nos sitemas operacionais (como a leitura de arquivos muito grandes no disco), a Libuv mantém um **Pool de Threads** separadas. Essas threads nativas (C++) executam o trabalho pesado fora do Event Loop, garantindo que a thread principal do JavaScript continue livre.
 
 **Event Loop: A Single thread orquestradora**</br>
 O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execução do código JavaScript. Ele opera em uma **única thread** e é a razão pela qual o NodeJS é considerado singlre-threaded para a execução do código JS.</br>
-- O ciclo de vida do Event loop
-- O event loop opera em um ciclo contínuo,  passando por várias "fases" para processar diferentes tipos de eventos.
-  - **1 - Timers**: Executa callbacks agendadas por <b>setTimeout()</b> e <b>setinterval()</b>;
+O ciclo de vida do Event loop, o event loop opera em um ciclo contínuo,  passando por várias "fases" para processar diferentes tipos de eventos.
+  - **1 - Timers**: Executa callbacks agendadas por <b>setTimeout()</b> e <b>setInterval()</b>;
      - Exemplo: O código de um <b>setTimeout(..., 0)</b> é executado aqui;
   - **2 - Pending callbacks**: Executa callbacks pendentes do sistema (exceto I/O, timers, e <b>close</b> callbacks);
      - Exemplo: Error de rede (se o SO disparar o erro);
@@ -133,6 +133,7 @@ O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execu�
 
 ___
 
+<!--
 <details>
 <summary> ❇️ Desempenho e Concorrência (Em Desenvolvimento)</summary>
 
@@ -144,8 +145,6 @@ Stream Processing: Utilização de Streams (Readable, Writable, Duplex) para pro
 </details>
 
 ---
-
-
 
 
 
