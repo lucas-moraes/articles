@@ -127,3 +127,28 @@ summary {
     font-size: 18px;
   }
 }
+
+table {
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(222, 222, 223);
+  color: rgb(0, 0, 0);
+}
+
+th {
+  background-color: rgb(236, 239, 241);
+  color: rgb(0, 0, 0);
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(222, 222, 223);
+}
+
+td {
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(222, 222, 223);
+  color: rgb(0, 0, 0);
+}
