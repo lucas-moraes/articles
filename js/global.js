@@ -3,8 +3,6 @@ const FOLDER_URL = "https://api.github.com/repos/lucas-moraes/articles/contents/
 const fetchAndDecodeArticle = async (filename) => {
   const ARTICLE_URL = `${FOLDER_URL}/${String(filename)}.md`;
 
-  console.log(`=>`, ARTICLE_URL);
-
   try {
     const resp = await fetch(ARTICLE_URL);
     if (!resp.ok) throw new Error(`HTTP Error: ${resp.status}`);
@@ -26,7 +24,7 @@ const fetchAndDecodeArticle = async (filename) => {
     const htmlContent = marked.parse(markdownContent);
 
     window.appRoot.innerHTML = `
-        <a onclick="router()">Voltar para a Lista</a>
+        <a href="" onclick="router()">Voltar para a Lista</a>
         <div class="article-content">${htmlContent}</div>
     `;
   } catch (error) {
