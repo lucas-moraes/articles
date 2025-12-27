@@ -7,7 +7,7 @@ NodeJS não é uma linguagem de programação nem um framework, mas sim um ambie
 ___
 
 <details>
-<summary>Características principais do NodeJS</summary>
+<summary> ❇️ Características principais do NodeJS</summary>
 
 - **Ambiente de execução**: Ele utiliza o motor v8 do google (o mesmo usado no navegador do chrome) para interpretar e executar o código JavaScript de forma rápida de um navegador web.
 - **Back-end com JavaScript**: Permite usar a mesma linguagem , o JavaScript, tanto para o front-end quanto para o back-end, facilitandp o desenvolvimento full-stack.
@@ -38,7 +38,7 @@ ___
 
 
 <details>  
-<summary>V8 engine</summary>
+<summary> ❇️ V8 engine</summary>
 
 O motor v8 do google é o coração do NodeJS. Ele é quem realmente transforma o código JavaScript que você escreve em instruções que o computador pode entender e executar de forma extremamente rápida.</br>
 Relação entre eles pode ser resumida na seguinte divisão de responsabilidades:</br>
@@ -47,8 +47,6 @@ Relação entre eles pode ser resumida na seguinte divisão de responsabilidades
 Lida com chamadas de função, variáveis e gerenciamento de memória (Garbage collection).</br>
 V8 é um motor de execução de JavaScript de código aberto escrito em c++.</br>
 **Sua principal função é garantir a velocidade e a eficiência do código.**
-
-teste do emoji ⭐️
 
 - Compilação Just-in-Time (JIT)
   - O v8 não é um mero interpretador. Ele usa uma técnica chamada **Compilação JIT** (Just-in-Time) que envolve dois passos principais:
@@ -63,9 +61,12 @@ teste do emoji ⭐️
 </br>
   <img width="500" alt="Image" src="https://github.com/user-attachments/assets/1f46b6de-fdea-4b50-b0f3-aa060707ac7b" />
 
+</br>
+</br>
+
 - Gerenciamento de memória
   - A memoria do NodeJS é dividida em duas áreas principais com comportamentos bem diferentes:
-  - |característica|memória Stack (Pilha)|memória Heap (Monte)|
+    |característica|memória Stack (Pilha)|memória Heap (Monte)|
     |--------------|:--------------------|:-------------------|
     |O que armazena|Tipos primitivos (number, string, boolean) e ponteiros|Objetos, arrays, closures e funções|
     |Organização|Estrutura LIFO (Last In, First Out). Muito rápida|Estrutura complexa e dinâmica|
@@ -89,7 +90,7 @@ teste do emoji ⭐️
 ___
 
 <details>
-<summary>Libuv e Event loop</summary>
+<summary> ❇️ Libuv e Event loop</summary>
 
 **Libuv: O coração assíncrono do NodeJS**</br>
 A Libuv é uma biblioteca multiplataforma de código aberto, escrita em C, que fornece a camada de abstração para operações de Entrada/Saída (I/O) assíncronas. Ela é o que permite ao NodeJS lidar com operações lentas sem bloquear a thread principal do JavaScript.
@@ -102,7 +103,6 @@ A Libuv é uma biblioteca multiplataforma de código aberto, escrita em C, que f
 O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execução do código JavaScript. Ele opera em uma **única thread** e é a razão pela qual o NodeJS é considerado singlre-threaded para a execução do código JS.</br>
 - O ciclo de vida do Event loop
 - O event loop opera em um ciclo contínuo,  passando por várias "fases" para processar diferentes tipos de eventos.
-    
   - **1 - Timers**: Executa callbacks agendadas por <b>setTimeout()</b> e <b>setinterval()</b>;
      - Exemplo: O código de um <b>setTimeout(..., 0)</b> é executado aqui;
   - **2 - Pending callbacks**: Executa callbacks pendentes do sistema (exceto I/O, timers, e <b>close</b> callbacks);
@@ -118,7 +118,7 @@ O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execu�
         - <ins>Uso interno</ins>: Ela é usada pela Libuv para executar verificações de rotina ou tarefas de manutenção que não são essenciais para o processamento imediato de eventos, ou que precisam ser executadas somente quando o Event loop está relativamente ocioso (Idle);
   - **4 - Poll (Sondagem)**:
      1. <i>Verifca I/O</i>: Busca novas conexões de rede ou dados lidos de arquivos;
-     2. <i><Executa callbacks/i>: Executa as callbacks de I/O que foram concluídas no Thread Pool;
+     2. <i>Executa callbacks</i>: Executa as callbacks de I/O que foram concluídas no Thread Pool;
      - Exemplo: <b>fs.readFile</b> calbacks, <b>neet.Socket</b> callbacks;
   - **5 - Check**: Executa callbacks agendadas por <b>setImmediate()</b>;
      - Exemplo: O código de um <b>setImmediate()</b> é executado aqui;
@@ -134,7 +134,7 @@ O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execu�
 ___
 
 <details>
-<summary>Desempenho e Concorrência (Em Desenvolvimento)</summary>
+<summary> ❇️ Desempenho e Concorrência (Em Desenvolvimento)</summary>
 
 Worker Threads: Uso de threads reais (fora do Event Loop) para realizar tarefas intensivas em CPU (cálculos complexos, criptografia) sem bloquear a thread principal.</br>
 Cluster Module: Técnicas para fork (duplicar) o processo do Node.js, aproveitando múltiplos núcleos da CPU (multiprocessamento) e distribuindo a carga de requisições.</br>
