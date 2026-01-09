@@ -133,6 +133,101 @@ O ciclo de vida do Event loop, o event loop opera em um ciclo contínuo,  passan
 
 ___
 
+<details>
+<summary> ❇️ Desempenho e Concorrência</summary>
+
+### Introdução ###
+---
+
+Como vimos acima, o NodeJS é single-thread, mas o que é thread? Thread (linha de execução) é a menor unidade de processamento dentro de um programa. Ela representa um fluxo de execução independente que o sistema operacional pode agendar e executar.
+</br>
+
+De forma simples: </br>
+⭐️ Um processo pode ter várias threads, e cada thread executa tarefas ao mesmo tempo ou de forma intercalada.
+
+No NodeJS: </br>
+🔸 - Existe uma thread principal; </br>
+🔸 - Ela executa o Event loop; </br>
+🔸 - Operações pesadas podem bloquear essa thread; </br>
+
+Por isso: </br>
+🔸 - Tarefas de I/O são assíncronas; </br>
+🔸 - Tarefas de CPU devem usar Worker Threads ou serviços externos; </br>
+</br>
+
+|Vantagens|Desvantagens|
+|:-------|:------------|
+|Melhor uso do processador |Complexidade maior |
+|Maior desempenho |Risco de condições de corrida (race conditions) |
+|Melhor experiência do usuário |Necessidade de sincronização (locks, mutex) |
+
+<p><b>O desempenho do NodeJs está diretamente liga a arquitetura de execução dos processos da API, podemos colocar o paralelismo e concorrência nessa arquitetura.</b></p>
+
+### ⛏️ - Worker Thread ###
+---
+
+No NodeJS, worker thread é um recurso que permite executar tarefas pesadas de CPU em paralelo, sem bloquear a thread principa (onde roda o Event Loop). </br>
+
+🟢 - É uma thread real do sistema operacional; </br>
+🟢 - É criada dentro do mesmo processo do NodeJS; </br>
+🟢 - Tem seu próprio Event Loop; </br>
+🟢 - Tem memória isolada da Thread principal; </br>
+🟢 - Ela se comunica com a thread principal por mensagens; </br>
+
+#### Comunicação ####
+A comunicação acontece via: </br>
+🟢 - ```postMessage()```; </br>
+🟢 - eventos ```message```; </br>
+🟢 - ```MessageChannel```; </br>
+🟢 - ```SharedArrayBuffer``` (casos avançados); </br>
+⚠️ - Por padrão, os dados são copiados (clonados), não compartilhados; </br>
+
+#### Quando usar Worker threads? ####
+Use quando: </br>
+→ há tarefas CPU-bound; </br>
+→ o Event Loop está sendo bloqueado; </br>
+→ você precisa de paralelismo real; </br>
+
+Não use quando: </br>
+→ o problema é apenas I/O; </br>
+→ uma simples operação assíncrona resolve; </br>
+→ o overhead de criar threads supera o ganho; </br>
+
+### ⚒️ - Cluster ###
+---
+Cluster é um mecanismo que permite executar múltiplas instâncias do NodeJS (processos) para aproveitar todos os núcleos da CPU e aumentar a escalabilidade de aplicações, principalmente servidores web. </br>
+Ele é fornecido pelo módulo nativo ```cluster```. </br>
+O cluster cria processos NodeJS, geralmente por núcleo de CPU. </br>
+
+Como o cluster funciona? </br>
+🔵 - Existe um processo master (primary); </br>
+🔵 - O master cria vários workers (processos filhos); </br>
+🔵 - Todos os workers:
++ Executam o mesmo código;
++ Escutam a mesma porta; </br>
+
+🔵 - O sistema operacional é um processo independente, com memória própria; </br>
+⚠️ - Cada worker é um processo independente, com memória própria; </br>
+
+|Vantagens|Desvantagens|
+|:-------|:------------|
+|Melhor uso dos núcleos da CPU | Maior uso de memória |
+|Alta disponibilidade | Comunicação entre processos é mais lenta (IPC) |
+|Isolamento (um worker cair não derruba tudo) | Estado não compartilhado (necessita cache externo) |
+|Escala horizontal dentro da mesma máquina |       |
+
+#### Quando usar cluster? ####
+Use quando: </br>
+→ sua aplicação é um servidor web; </br>
+→ há muitas conexões simultâneas; </br>
+→ você quer escalar em uma única máquina; </br>
+
+Evite quando: </br>
+→ precisa compartilhar muito estado em memória; </br>
+→ o gargalo é processamento pesado (use Worker Threads); </br>
+
+</details>
+
 <!--
 <details>
 <summary> ❇️ Desempenho e Concorrência (Em Desenvolvimento)</summary>
