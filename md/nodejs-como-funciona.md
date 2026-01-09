@@ -226,6 +226,8 @@ Evite quando: </br>
 → precisa compartilhar muito estado em memória; </br>
 → o gargalo é processamento pesado (use Worker Threads); </br>
 
+Em resumo, a Thread worker paraleliza, o Cluster escala.
+
 </details>
 
 <!--
