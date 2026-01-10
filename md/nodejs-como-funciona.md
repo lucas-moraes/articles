@@ -161,6 +161,7 @@ Por isso: </br>
 |Melhor uso do processador |Complexidade maior |
 |Maior desempenho |Risco de condições de corrida (race conditions) |
 |Melhor experiência do usuário |Necessidade de sincronização (locks, mutex) |
+
 </br>
 </br>
 
