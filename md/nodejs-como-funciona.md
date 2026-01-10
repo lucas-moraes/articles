@@ -197,18 +197,19 @@ SharedArrayBuffer
 </br>
 
 ⚠️ - Por padrão, os dados são copiados (clonados), não compartilhados; </br>
+</br>
 
 <p><b>Quando usar Worker threads?</b></p>
 Use quando: </br>
-→ há tarefas CPU-bound; </br>
-→ o Event Loop está sendo bloqueado; </br>
-→ você precisa de paralelismo real; </br>
+→ Há tarefas CPU-bound; </br>
+→ O Event Loop está sendo bloqueado; </br>
+→ Você precisa de paralelismo real; </br>
 </br>
 
 Não use quando: </br>
-→ o problema é apenas I/O; </br>
-→ uma simples operação assíncrona resolve; </br>
-→ o overhead de criar threads supera o ganho; </br>
+→ O problema é apenas I/O; </br>
+→ Uma simples operação assíncrona resolve; </br>
+→ O overhead de criar threads supera o ganho; </br>
 
 ### ⚒️ - Cluster ###
 ---
