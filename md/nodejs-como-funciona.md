@@ -246,6 +246,8 @@ Como o cluster funciona? </br>
 |Isolamento (um worker cair não derruba tudo) | Estado não compartilhado (necessita cache externo) |
 |Escala horizontal dentro da mesma máquina |       |
 
+</br>
+
 <p><b> Quando usar cluster?</b></p>
 Use quando: </br>
 → sua aplicação é um servidor web; </br>
