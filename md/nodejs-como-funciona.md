@@ -247,6 +247,7 @@ Como o cluster funciona? </br>
 |Escala horizontal dentro da mesma máquina |       |
 
 </br>
+</br>
 
 <p><b> Quando usar cluster?</b></p>
 Use quando: </br>
