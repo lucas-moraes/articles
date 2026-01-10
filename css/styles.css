@@ -71,7 +71,7 @@ body {
 code {
   background-color: #0a0725;
   display: flex;
-  width: 100%;
+  width: fit-content;
   flex-direction: column;
   color: #00ff28;
   padding: 14px;
