@@ -217,6 +217,9 @@ Não use quando: </br>
 → Uma simples operação assíncrona resolve; </br>
 → O overhead de criar threads supera o ganho; </br>
 
+</br>
+</br>
+
 ### ⚒️ - Cluster ###
 ---
 Cluster é um mecanismo que permite executar múltiplas instâncias do NodeJS (processos) para aproveitar todos os núcleos da CPU e aumentar a escalabilidade de aplicações, principalmente servidores web. </br>
@@ -231,7 +234,10 @@ Como o cluster funciona? </br>
 + Escutam a mesma porta; </br>
 
 🔵 - O sistema operacional é um processo independente, com memória própria; </br>
+</br>
 ⚠️ - Cada worker é um processo independente, com memória própria; </br>
+
+</br>
 
 |Vantagens|Desvantagens|
 |:-------|:------------|
@@ -240,15 +246,17 @@ Como o cluster funciona? </br>
 |Isolamento (um worker cair não derruba tudo) | Estado não compartilhado (necessita cache externo) |
 |Escala horizontal dentro da mesma máquina |       |
 
-#### Quando usar cluster? ####
+<p><b> Quando usar cluster?</b></p>
 Use quando: </br>
 → sua aplicação é um servidor web; </br>
 → há muitas conexões simultâneas; </br>
 → você quer escalar em uma única máquina; </br>
-
+</br>
 Evite quando: </br>
 → precisa compartilhar muito estado em memória; </br>
 → o gargalo é processamento pesado (use Worker Threads); </br>
+
+</br>
 
 Em resumo, a Thread worker paraleliza, o Cluster escala.
 
