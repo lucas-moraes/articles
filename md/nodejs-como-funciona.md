@@ -144,12 +144,13 @@ Como vimos acima, o NodeJS é single-thread, mas o que é thread? Thread (linha 
 De forma simples: </br>
 </br>
 ⭐️ Um processo pode ter várias threads, e cada thread executa tarefas ao mesmo tempo ou de forma intercalada. </br>
+</br>
 
 No NodeJS: </br>
 🔸 - Existe uma thread principal; </br>
 🔸 - Ela executa o Event loop; </br>
 🔸 - Operações pesadas podem bloquear essa thread; </br>
-
+</br>
 Por isso: </br>
 +  Tarefas de I/O são assíncronas; </br>
 +  Tarefas de CPU devem usar Worker Threads ou serviços externos; </br>
@@ -160,6 +161,7 @@ Por isso: </br>
 |Melhor uso do processador |Complexidade maior |
 |Maior desempenho |Risco de condições de corrida (race conditions) |
 |Melhor experiência do usuário |Necessidade de sincronização (locks, mutex) |
+</br>
 </br>
 
 <p><b>O desempenho do NodeJs está diretamente ligada a arquitetura de execução dos processos da API, podemos colocar o paralelismo e concorrência nessa arquitetura.</b></p>
