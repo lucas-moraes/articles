@@ -179,6 +179,7 @@ Worker Thread: </br>
 
 <p><b>Comunicação</b></p>
 A comunicação acontece via: </br>
+
 ```javascriot
 postMessage()
 ```
