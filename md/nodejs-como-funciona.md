@@ -177,7 +177,7 @@ Worker Thread: </br>
 🟢 - Ela se comunica com a thread principal por mensagens; </br>
 </br>
 
-#### Comunicação ####
+<p><b>Comunicação</b></p>
 A comunicação acontece via: </br>
 ```javascriot
 postMessage()
@@ -197,7 +197,7 @@ SharedArrayBuffer
 
 ⚠️ - Por padrão, os dados são copiados (clonados), não compartilhados; </br>
 
-#### Quando usar Worker threads? ####
+<p><b>Quando usar Worker threads?</b></p>
 Use quando: </br>
 → há tarefas CPU-bound; </br>
 → o Event Loop está sendo bloqueado; </br>
