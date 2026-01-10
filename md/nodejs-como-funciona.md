@@ -163,9 +163,11 @@ Por isso: </br>
 |Melhor experiência do usuário |Necessidade de sincronização (locks, mutex) |
 
 </br>
-</br>
 
 <p><b>O desempenho do NodeJs está diretamente ligada a arquitetura de execução dos processos da API, podemos colocar o paralelismo e concorrência nessa arquitetura.</b></p>
+
+</br>
+</br>
 
 ### ⛏️ - Worker Thread ###
 ---
