@@ -181,6 +181,7 @@ Worker Thread: </br>
 🟢 - Tem seu próprio Event Loop; </br>
 🟢 - Tem memória isolada da Thread principal; </br>
 🟢 - Ela se comunica com a thread principal por mensagens; </br>
+🟢 - Isolamento: Cada worker thread tem sua própria instância V8 (para executar o JS) e sua própria pilha de eventos de I/O, rodando em um processo separado da thread principal; </br>
 </br>
 
 <p><b>Comunicação</b></p>
