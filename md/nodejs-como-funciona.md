@@ -266,6 +266,29 @@ Em resumo, a Thread worker paraleliza, o Cluster escala.
 
 </details>
 
+---
+
+<details>
+<summary> ❇️ Módulos e Sistema de importação</summary>
+
+Esses três tópicos são fundamentais para entender como o NodeJS organiza o código e como ele escala de um único arquivo para sistemas complexos. </br>
+
+#### CommonJS (CJS) vs. ES Modules (ESM) ####
+Até alguns anos atrás, o NodeJS usava apenas o CommonJS. com a padronização do JavaScript (ES6), o ES Modules foi introduzido e hoje é o padrão da linguagem, embora ambos coexistam no ecossistema Node.
+</br>
+
+<b>Diferenças práticas:</b>
+</br>
+
+|Características|CommonJS (CJS)|ES Modules (ESM)|
+|:--------------|:-------------|:---------------|
+|Sintaxe        |
+|Carregamento   |
+|Extensão padrão|
+|Top-level Await|
+|
+</details>
+
 <!--
 <details>
 <summary> ❇️ Desempenho e Concorrência (Em Desenvolvimento)</summary>
