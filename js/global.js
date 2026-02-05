@@ -24,7 +24,7 @@ const fetchAndDecodeArticle = async (filename) => {
     const htmlContent = marked.parse(markdownContent);
 
     window.appRoot.innerHTML = `
-        <a href="" onclick="router()">Voltar para a Lista</a>
+        <a href="" onclick="router()">← Voltar para a lista</a>
         <div class="article-content">${htmlContent}</div>
     `;
   } catch (error) {
@@ -50,7 +50,7 @@ export const listArticles = async () => {
 
         return `
               <div class="card" onclick="fetchAndDecodeArticle('${slug}')">
-                  * ${title}
+                  → ${title}
               </div>
          `;
       })

@@ -25,25 +25,16 @@ body {
   flex-direction: column;
   align-items: center;
   transition: background 2s ease-in-out;
+  background-color: #f4f3f5;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e3dced' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 #root {
-  max-width: 800px;
+  max-width: 1200px;
   width: 100%;
   margin-bottom: 100px;
-}
-
-.light-gradient {
-  background-color: hsla(165, 0%, 100%, 1);
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 962 962' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
-    radial-gradient(circle at 0% 0%, hsla(256, 82%, 77%, 0.35) 3.1210986267166043%, transparent 40%),
-    radial-gradient(circle at 20% 0%, hsla(197, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%),
-    radial-gradient(circle at 40% 0%, hsla(147, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%),
-    radial-gradient(circle at 60% 0%, hsla(88, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%),
-    radial-gradient(circle at 80% 0%, hsla(23, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%),
-    radial-gradient(circle at 100% 0%, hsla(234.26470588235304, 100%, 50%, 0.35) 3%, transparent 40%);
-  background-blend-mode: overlay, normal, normal, normal, normal, normal, normal;
+  padding: 20px;
+  background-color: #ffffffcc;
 }
 
 .container {
@@ -56,16 +47,19 @@ body {
 }
 
 .card {
-  background: #ffffffcc;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100px;
-  height: 100px;
+  background: #f6e9ffcc;
+  box-shadow: 1px 1px 4px 0px rgb(228 228 228);
+  padding: 10px;
   cursor: pointer;
-  font-family: "Homemade Apple", cursive;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
-  text-transform: capitalize;
+  border: solid 1px #f3e1ff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 3px 3px 4px 0px rgb(228 228 228);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 code {
@@ -106,14 +100,11 @@ summary {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-image: linear-gradient(to right, #582aff 25%, #a800ff5c 54%, #9932cc26 89%) 1;
+  margin-bottom: 50px;
 }
 
 .articles-header > h1 {
-  font-size: 30px;
+  font-size: 50px;
   font-weight: 600;
   margin: 0;
   background: linear-gradient(to top left, #912aff 65%, #b400ff 74%, #602aff 76%, #f700ff 100%);
