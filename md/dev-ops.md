@@ -49,6 +49,49 @@ Para saber se o site caiu ou se está lento antes que o cliente reclame.</br>
 ⇢ <b>New Relic / Datadog:</b> Monitoramento completo de performance (APM).</br></br>
 
 
+<details>
+<summary>⭐️ - Docker</summary>
+Antes do Docker, tínhamos o clássico problema: "Na minha máquina funciona, mas no servidor não". Isso acontecia por diferenças de versões de software e sistemas
+</br></br>
+<b>Diferença entre Máquina Virtual (VM) e Container:</b></br>
+・<b>VM:</b> Emula um hardware completo e roda um Sistema Operacional (SO) inteiro dentro de outro. É pesado e lento.</br>
+・<b>Container:</b> Compartilha o kernel do SO da máquina hospedeira. É leve, inicia em segundos e ocupa pouco espaço.</br>
+</br>
+<b>Conceitos Chave</b></br>
+・<b>Dockerfile:</b> O "receituário". Um arquivo de texto com as instruções para criar sua imagem.</br>
+・<b>Imagem:</b> O "pacote" estático. É o resultado do build do Dockerfile.</br>
+・<b>Container:</b> A "instância" em execução. É a imagem rodando como um processo.</br>
+・<b>Docker Hub:</b>  O "GitHub das imagens". Onde você baixa imagens prontas (Node, Python, MySQL).</br>
+</br>
+<b>Persistência de Dados (Volumes)</b></br>
+Containers são efêmeros (se você deletar o container, os dados somem). Para salvar arquivos permanentemente (como um banco de dados), usamos:</br>
+・<b>Volumes:</b> Gerenciados pelo Docker.</br>
+・<b>Bind Mounts:</b> Mapeiam uma pasta específica do seu PC para dentro do container.</br>
+<b>Redes (Networking)</b></br>
+O Docker cria redes virtuais para que os containers conversem entre si.</br>
+・<b>Bridge:</b> A rede padrão para containers isolados.</br>
+・<b>Host:</b> Remove o isolamento entre o container e a máquina real.</br>
+</br>
+<b>Docker Compose</b></br>
+Ninguém sobe um sistema complexo rodando 10 comandos <code>docker run</code>. Usamos o Docker Compose (arquivo <code>docker-compose.yml</code>) para definir e rodar multi-containers com um único comando: <code>docker-compose up</code>.</br>
+</br>
+<b>Otimização de Imagens</b></br>
+Imagens gigantes são lentas para transferir. Técnicas avançadas incluem:</br>
+・<b>Multi-stage Builds:</b> Você usa uma imagem pesada para compilar o código (ex: Java/Go) e copia apenas o executável final para uma imagem mínima (como Alpine Linux).</br>
+・<b>Camadas (Layers):</b> Cada comando no Dockerfile cria uma camada. Ordem importa para aproveitar o cache.</br>
+Orquestração
+Quando você tem centenas de containers, o Docker sozinho não basta. É aqui que entram os orquestradores:</br>
+・<b>Docker Swarm:</b> A solução nativa do Docker para clusters (mais simples).</br>
+・<b>Kubernetes (K8s):</b>  O padrão da indústria para gerenciar containers em escala global, cuidando de auto-scaling e auto-recuperação.</br>
+</br>
+<b>Segurança</b></br>
+・<b>Rootless mode:</b> Rodar o Docker sem privilégios de administrador.</br>
+・<b>Scanning:</b> Ferramentas que varrem suas imagens em busca de vulnerabilidades conhecidas.</br>
 
+
+
+
+  
+</details>
 
 
