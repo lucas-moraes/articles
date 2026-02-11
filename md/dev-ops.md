@@ -79,7 +79,8 @@ Ninguém sobe um sistema complexo rodando 10 comandos <code>docker run</code>. U
 Imagens gigantes são lentas para transferir. Técnicas avançadas incluem:</br>
 ・<b>Multi-stage Builds:</b> Você usa uma imagem pesada para compilar o código (ex: Java/Go) e copia apenas o executável final para uma imagem mínima (como Alpine Linux).</br>
 ・<b>Camadas (Layers):</b> Cada comando no Dockerfile cria uma camada. Ordem importa para aproveitar o cache.</br>
-Orquestração
+</br>
+<b>Orquestração</b></br>
 Quando você tem centenas de containers, o Docker sozinho não basta. É aqui que entram os orquestradores:</br>
 ・<b>Docker Swarm:</b> A solução nativa do Docker para clusters (mais simples).</br>
 ・<b>Kubernetes (K8s):</b>  O padrão da indústria para gerenciar containers em escala global, cuidando de auto-scaling e auto-recuperação.</br>
