@@ -67,6 +67,7 @@ Antes do Docker, tínhamos o clássico problema: "Na minha máquina funciona, ma
 Containers são efêmeros (se você deletar o container, os dados somem). Para salvar arquivos permanentemente (como um banco de dados), usamos:</br>
 ・<b>Volumes:</b> Gerenciados pelo Docker.</br>
 ・<b>Bind Mounts:</b> Mapeiam uma pasta específica do seu PC para dentro do container.</br>
+</br>
 <b>Redes (Networking)</b></br>
 O Docker cria redes virtuais para que os containers conversem entre si.</br>
 ・<b>Bridge:</b> A rede padrão para containers isolados.</br>
