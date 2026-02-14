@@ -89,11 +89,25 @@ Quando você tem centenas de containers, o Docker sozinho não basta. É aqui qu
 <b>Segurança</b></br>
 ・<b>Rootless mode:</b> Rodar o Docker sem privilégios de administrador.</br>
 ・<b>Scanning:</b> Ferramentas que varrem suas imagens em busca de vulnerabilidades conhecidas.</br>
+</br>
+<b>Docker engine</b></br>
+É o que fica instalado no sistema, dividido em três partes:</br>
+→ <b>Docker CLI (Command Line Interface):</b> É onde você digita os comandos (ex: docker run). Na imagem, ela aparece no topo porque é o seu ponto de entrada como usuário.</br>
+→ <b>Docker API:</b> Funciona como a "ponte" de comunicação. A CLI não fala diretamente com o Daemon; ela envia requisições através desta API REST.</br>
+→ <b>Docker Daemon:</b> O coração do sistema. Ele recebe as ordens da API e gerencia os objetos (containers e imagens). Note que ele é o único que se comunica diretamente com o Host OS (Sistema Operacional Hospedeiro) para gerenciar recursos de hardware.</br>
+</br>
+<b>A Base: Host OS</b></br>
+Na base de tudo está o Host OS. Isso reforça um conceito fundamental do Docker: ele não é uma Máquina Virtual.</br>
+O Docker Daemon utiliza o Kernel do seu sistema operacional hospedeiro (seja Linux, Windows ou Mac) para isolar processos, o que o torna muito mais leve e rápido que uma virtualização tradicional.
 
-
-
-
-  
+<b>Docker compose</b></br>
+É o orquestrador de containers do docker, nele usando um único arquivo, é possível subir diversos containers.</br>
+</br>
+<b>Principais seções:</b>
+→ <b>Services:</b> Define cada container da sua aplicação. Você pode especificar a imagem, portas, variáveis de ambiente e limites de memória.</br>
+→ <b>Networks:</b> Por padrão, o Compose cria uma rede única para todos os serviços do arquivo. Isso permite que o web converse com o db usando apenas o nome do serviço (ex: host: db), sem precisar saber o IP.</br>
+→ <b>Volumes:</b> Define onde os dados serão persistidos fora dos containers. Essencial para bancos de dados.</br>
+→ <b>Configs e Secrets:</b> Para gerenciar configurações sensíveis de forma mais segura.</br>  
 </details>
 
 
