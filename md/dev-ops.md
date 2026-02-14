@@ -98,8 +98,8 @@ Quando você tem centenas de containers, o Docker sozinho não basta. É aqui qu
 </br>
 <b>A Base: Host OS</b></br>
 Na base de tudo está o Host OS. Isso reforça um conceito fundamental do Docker: ele não é uma Máquina Virtual.</br>
-O Docker Daemon utiliza o Kernel do seu sistema operacional hospedeiro (seja Linux, Windows ou Mac) para isolar processos, o que o torna muito mais leve e rápido que uma virtualização tradicional.
-
+O Docker Daemon utiliza o Kernel do seu sistema operacional hospedeiro (seja Linux, Windows ou Mac) para isolar processos, o que o torna muito mais leve e rápido que uma virtualização tradicional.</br>
+</br>
 <b>Docker compose</b></br>
 É o orquestrador de containers do docker, nele usando um único arquivo, é possível subir diversos containers.</br>
 </br>
