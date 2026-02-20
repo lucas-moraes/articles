@@ -98,16 +98,69 @@ Quando você tem centenas de containers, o Docker sozinho não basta. É aqui qu
 </br>
 <b>A Base: Host OS</b></br>
 Na base de tudo está o Host OS. Isso reforça um conceito fundamental do Docker: ele não é uma Máquina Virtual.</br>
-O Docker Daemon utiliza o Kernel do seu sistema operacional hospedeiro (seja Linux, Windows ou Mac) para isolar processos, o que o torna muito mais leve e rápido que uma virtualização tradicional.</br>
+O Docker Daemon utiliza o Kernel do seu sistema operacional hospedeiro (seja Linux, Windows ou Mac) para isolar processos, o que o torna muito mais leve e rápido que   virtualização tradicional.</br>
 </br>
 <b>Docker compose</b></br>
 É o orquestrador de containers do docker, nele usando um único arquivo, é possível subir diversos containers.</br>
 </br>
-<b>Principais seções:</b>
+<b>Principais seções:</b></br>
 → <b>Services:</b> Define cada container da sua aplicação. Você pode especificar a imagem, portas, variáveis de ambiente e limites de memória.</br>
 → <b>Networks:</b> Por padrão, o Compose cria uma rede única para todos os serviços do arquivo. Isso permite que o web converse com o db usando apenas o nome do serviço (ex: host: db), sem precisar saber o IP.</br>
 → <b>Volumes:</b> Define onde os dados serão persistidos fora dos containers. Essencial para bancos de dados.</br>
 → <b>Configs e Secrets:</b> Para gerenciar configurações sensíveis de forma mais segura.</br>  
 </details>
+
+⭐️ - Kubernetes (K8's)
+O segredo do K8's não é a tecnologia de containers, mas o seu <b>loop de controle (Reconciliation loop)</b></br>
+No Docker tradiciona, damos as ordens imperativas: "Docker, roder esse container". Se o container morrer, o Docker (geralmente) não faz nada a menos que você tenha configurado uma politica de restart simples.</br>
+No Kubernetes, a lógica é <b>declarativa</b>:</br>
+● Você define o <b>estado desejado</b>: (Ex: "Quero 3 replicas da minha API rodando");</br>
+● O <b>Control Plane</b> observa o <b>Estado atual</b>: (EX: "Só existem 2 réplicas rodando porque uma falhou");</br>
+● Ele executa uma ação para converter o atual no desejado (Ex: "Vou  criar uma nova réplica em outro Node saudável");</br>
+<b>Insight incisivo</b>: O Kubernetes é, na verdade, um gigantesco motor de busa de erros. Ele passa 100% do tempo tentando provar que você está errado e corrigindo o sistema para que ele volte ao que você pediu.</br>
+</br>
+<b>Desconstruindo os objetos (A Anatomia da abstração)</b></br>
+</br>
+<b>Pod (A unidade atômica)</b></br>
+O Pod não é apenas um container, ele é um ambiente de isolamento compartilhado.</br>
+<b>Por que não rodar o container direto?</b> Porque às vezes você precisa de um "ajudante" (o padrão Sidecar). Ex: Um container roda sua App e outro container no mesmo Pod apenas coleta os logs e os envia para um servidor externo. Eles compartilham o mesmo <code>localhost</code>.</br>
+</br>
+<b>O Deployment (A estratégia de guerra)</b></br>
+O Deployment não "roda" nada, ele gerencia o <b>ReplicaSet</b>.</br>
+Ele é quem decide como a atualização será feita. Se você mudar a versão da sua imagem, o Deployment pode fazer um <b>Rolling update:</b> mata um Pod antigo, sobe um novo, mata outro antigo, sobe outro novo. Se o novo falhar, ele para tudo e mantém os antigos vivos.</br>
+</br>
+<b>O Service (A identidade estável)</b></br>
+Em um mundo onde Pods nascem e morrem o tempo todo, o IP deles muda constantemente.</br>
+O <b>Service</b> é um abstração que define um conjunto lógico de Pods e uma política para acessá-los. Ele funciona como um "nome fantasia" que nunca muda, não importa quantos Pods entrem ou saiam da "loja".</br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
