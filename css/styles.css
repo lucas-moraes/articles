@@ -75,11 +75,12 @@ code {
 
 /*span is <code> */
 span {
-  background-color: #7e7e7e;
-  border: 1px solid #7e7e7e;
-  color: #2cfc6a;
-  padding: 1px 7px;
-  border-radius: 5px;
+    background-color: #7e7e7e;
+    border: 1px solid #7e7e7e;
+    border-radius: 5px;
+    color: #59ff00;
+    padding: 0px 7px;
+    font-size: 13px;
 }
 
 img {
