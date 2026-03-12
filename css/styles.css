@@ -73,7 +73,7 @@ code {
   box-shadow: 1px 3px 9px 0px #0a0a0ab0;
 }
 
-//span is code
+/*span is <code> */
 span {
   background-color: #7e7e7e;
   border: 1px solid #7e7e7e;
