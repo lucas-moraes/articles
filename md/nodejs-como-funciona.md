@@ -187,20 +187,10 @@ Worker Thread: </br>
 <p><b>Comunicação</b></p>
 A comunicação acontece via: </br>
 
-```javascriot
-postMessage()
-```
-```javascript
-//Eventos
-message
-```
-```javascript
-MessageChannel
-```
-```javascript
-//Casos avançados
-SharedArrayBuffer
-```
+<span>postMessage()</span></br>
+<span>//Eventos message</span></br>
+<span>MessageChannel</span></br>
+<span>//Casos avançados SharedArrayBuffer</span></br>
 </br>
 
 ⚠️ - Por padrão, os dados são copiados (clonados), não compartilhados; </br>
