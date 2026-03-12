@@ -298,7 +298,7 @@ Até alguns anos atrás, o NodeJS usava apenas o CommonJS. com a padronização 
 O processo de busco de um módulo segue uma hierarquia rigorosa. 
 Quando fazemos <code>require('xyz')</code> ou <code>import x from 'xyz'</code>, o Node segue estes passos:</br>
 1. <b>Módulos Core:</b> Ele verifica se 'xyz' é um módulo nativo (ex: <code>fs</code>, <code>path</code>, <code>http</code>). Se for, ele para aqui.
-2. <b>Módulos de arquivo (Relativos/Absolutos):</b> Se começar com <code>./</code>, <code>/</code> ou <code>../</code>, ele busca o arquivo exato no sistema.
+2. <b>Módulos de arquivo (Relativos/Absolutos):</b> Se começar com <code>"./"</code>, <code>"/"</code> ou <code>"../"</code>, ele busca o arquivo exato no sistema.
 3. <b>Módulos de pacote (<code>node_modules</code>):</b> Se não for um caminho relativo, o Node busca na pasta <b>node_modules</b> do diretorio atual.
    Se não encontrar, ele sobe para o diretório pai e procura na <code>node_modules</code> de lá, repetindo isso até a rais do sistema de arquivos.
 4. <code>package.json</code>: Ao entrar em uma pasta de módulo, ele olha o campo <code>"main"</code> (CJS) ou <code>"exports"</code> (ESM) para saber qual arquivo carregar.</br>
