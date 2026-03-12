@@ -280,13 +280,40 @@ Até alguns anos atrás, o NodeJS usava apenas o CommonJS. com a padronização 
 <b>Diferenças práticas:</b>
 </br>
 
-|Características|CommonJS (CJS)|ES Modules (ESM)|
-|:--------------|:-------------|:---------------|
-|Sintaxe        |
-|Carregamento   |
-|Extensão padrão|
-|Top-level Await|
-|
+|Características|CommonJS (CJS)                                       |ES Modules (ESM)                           |
+|:--------------|:----------------------------------------------------|:------------------------------------------|
+|Sintaxe        |<code>require()</code> / <code>module.exports</code> |<code>import</code> / <code>export</code>  |
+|Carregamento   |Síncrono                                             |Assíncrono                                 |
+|Extensão padrão|<code>.js</code> (ou <code>.cjs</code>)              |<code>.mjs</code> (ou <code>.js</code> com <code>"type": "module"</code>)|
+|Top-level Await|Não suportado                                        |Suportado (pode usar <code>await</code> fora de funções)|
+|Variáveis de ambiente|Possui <code>__dirname</code> e <code>--filename</code>|Não possui (precisa de <code>import.meta.url</code>)|
+
+</br>
+
+<b>Quando usar cada um?</b></br>
+→ <b>ES Modules:</b> Use em <b>todos os projetos novos.</b> É o padrão oficial, permite <i>Tree Shaking</i> (remover código não usado no build) e funciona nativamente no navegador e no Node.</br>
+→ <b>CommonJS:</b> Use apenas se estiver mantendo <b>Projetos legados</b> ou se precisar de uma biblioteca muito específica que ainda não tenha migrado para ESM (o que é raro hoje em dia).</br>
+
+#### Module Resolution: Como o NodeJS encontra arquivos
+O processo de busco de um módulo segue uma hierarquia rigorosa. 
+Quando fazemos <code>require('xyz')</code> ou <code>import x from 'xyz'</code>, o Node segue estes passos:</br>
+1. <b>Módulos Core:</b> Ele verifica se 'xyz' é um módulo nativo (ex: <code>fs</code>, <code>path</code>, <code>http</code>). Se for, ele para aqui.
+2. <b>Módulos de arquivo (Relativos/Absolutos):</b> Se começar com <code>./</code>, <code>/</code> ou <code>../</code>, ele busca o arquivo exato no sistema.
+3. <b>Módulos de pacote (<code>node_modules</code>):</b> Se não for um caminho relativo, o Node busca na pasta <b>node_modules</b> do diretorio atual.
+   Se não encontrar, ele sobe para o diretório pai e procura na <code>node_modules</code> de lá, repetindo isso até a rais do sistema de arquivos.
+4. <code>package.json</code>: Ao entrar em uma pasta de módulo, ele olha o campo <code>"main"</code> (CJS) ou <code>"exports"</code> (ESM) para saber qual arquivo carregar.</br>
+
+#### Circular dependencies (Dependências circulares)
+Uma dependência circular ocorre quando o módulo A importa o módulo B, e o módulo B, por sua vez, importa o módulo A.</br>
+<b>Como o NodeJS lida com isso?</b></br>
+O NodeJS não quebra ou trava, mas ele pode retornar um <b>objeto incompleto</b></br>
+• No CommonJS: Se A importa B enquanto ainda está sendo, B receberá uma versão "inacabada" de A (geralmente um objeto vazio <code>{}</code>). 
+Isso causa erros de <code>undefined</code> difíceis de rastrear.</br>
+#### Como evitar e resolver?
+1. <b>Refatoração (Extração):</b> Se A e B dependem um do outro, provavelmente existe um código comum a ambos. Mova esse código para um <b>Módulo C</b> que A e B possam importar.
+2. <b>Injeção de dependência:</b> Em vez de B importar A, faça com que A passe o que B precisa como um argumento ou função;
+3. <b>Importação tardia (lazy loading):</b> No CommonJS, você pode remover o <code>require()</code> para dentro de uma função, para que ele só seja executado quando a função for chamada, e não no carregamento do arquivo.
+<b>Dica de outro:</b> Se você encontrar um erro onde uma função importada é <code>undefined</code>, mas o arquivo parece estar correto, verifique imediatamente se não há um cilco de importação entre esses arquivos.
 </details>
 
 <!--
