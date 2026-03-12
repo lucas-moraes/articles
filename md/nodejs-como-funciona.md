@@ -282,11 +282,11 @@ Até alguns anos atrás, o NodeJS usava apenas o CommonJS. com a padronização 
 
 |Características|CommonJS (CJS)                                       |ES Modules (ESM)                           |
 |:--------------|:----------------------------------------------------|:------------------------------------------|
-|Sintaxe        |<span>require()</span> / <b>module.exports</b> |<b>import</b> / <b>export</b>  |
+|Sintaxe        |<span>require()</span> / <span>module.exports</span> |<span>import</span> / <span>export</span>  |
 |Carregamento   |Síncrono                                             |Assíncrono                                 |
-|Extensão padrão|<b>.js</b> (ou <b>.cjs</b>)              |<b>.mjs</b> (ou <b>.js</b> com <b>"type": "module"</b>)|
-|Top-level Await|Não suportado                                        |Suportado (pode usar <code>await</code> fora de funções)|
-|Variáveis de ambiente|Possui <b>__dirname</b> e <b>--filename</b>|Não possui (precisa de <b>import.meta.url</b>)|
+|Extensão padrão|<span.js</b> (ou <span>.cjs</span>)              |<span>.mjs</span> (ou <span>.js</span> com <span>"type": "module"</span>)|
+|Top-level Await|Não suportado                                        |Suportado (pode usar <span>await</span> fora de funções)|
+|Variáveis de ambiente|Possui <span>__dirname</span> e <span>--filename</span>|Não possui (precisa de <span>import.meta.url</span>)|
 
 </br>
 
