@@ -60,7 +60,7 @@ export const listArticles = async () => {
         <div class="articles-header">
           <h1>Articles</h1>
           <a href="https://lucas-moraes.github.io/">
-            <span> 🏠 Home</span>
+            <p> 🏠 Home</p>
           </a>
         </div>
         <p>Selecione o artigo:</p>
