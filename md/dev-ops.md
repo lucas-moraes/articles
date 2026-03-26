@@ -74,7 +74,7 @@ O Docker cria redes virtuais para que os containers conversem entre si.</br>
 ・<b>Host:</b> Remove o isolamento entre o container e a máquina real.</br>
 </br>
 <b>Docker Compose</b></br>
-Ninguém sobe um sistema complexo rodando 10 comandos <code>docker run</code>. Usamos o Docker Compose (arquivo <code>docker-compose.yml</code>) para definir e rodar multi-containers com um único comando: <code>docker-compose up</code>.</br>
+Ninguém sobe um sistema complexo rodando 10 comandos <span>docker run</span>. Usamos o Docker Compose (arquivo <span>docker-compose.yml</span>) para definir e rodar multi-containers com um único comando: <span>docker-compose up</span>.</br>
 </br>
 <b>Otimização de Imagens</b></br>
 Imagens gigantes são lentas para transferir. Técnicas avançadas incluem:</br>
@@ -123,7 +123,7 @@ No Kubernetes, a lógica é <b>declarativa</b>:</br>
 </br>
 <b>Pod (A unidade atômica)</b></br>
 O Pod não é apenas um container, ele é um ambiente de isolamento compartilhado.</br>
-<b>Por que não rodar o container direto?</b> Porque às vezes você precisa de um "ajudante" (o padrão Sidecar). Ex: Um container roda sua App e outro container no mesmo Pod apenas coleta os logs e os envia para um servidor externo. Eles compartilham o mesmo <code>localhost</code>.</br>
+<b>Por que não rodar o container direto?</b> Porque às vezes você precisa de um "ajudante" (o padrão Sidecar). Ex: Um container roda sua App e outro container no mesmo Pod apenas coleta os logs e os envia para um servidor externo. Eles compartilham o mesmo <span>localhost</span>.</br>
 </br>
 <b>O Deployment (A estratégia de guerra)</b></br>
 O Deployment não "roda" nada, ele gerencia o <b>ReplicaSet</b>.</br>
