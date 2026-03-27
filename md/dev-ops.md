@@ -110,7 +110,8 @@ O Docker Daemon utiliza o Kernel do seu sistema operacional hospedeiro (seja Lin
 → <b>Configs e Secrets:</b> Para gerenciar configurações sensíveis de forma mais segura.</br>  
 </details>
 
-⭐️ - Kubernetes (K8's)
+<details>
+<summary>⭐️ - Kubernetes (K8's)</summary>
 O segredo do K8's não é a tecnologia de containers, mas o seu <b>loop de controle (Reconciliation loop)</b></br>
 No Docker tradiciona, damos as ordens imperativas: "Docker, roder esse container". Se o container morrer, o Docker (geralmente) não faz nada a menos que você tenha configurado uma politica de restart simples.</br>
 No Kubernetes, a lógica é <b>declarativa</b>:</br>
@@ -132,8 +133,26 @@ Ele é quem decide como a atualização será feita. Se você mudar a versão da
 <b>O Service (A identidade estável)</b></br>
 Em um mundo onde Pods nascem e morrem o tempo todo, o IP deles muda constantemente.</br>
 O <b>Service</b> é um abstração que define um conjunto lógico de Pods e uma política para acessá-los. Ele funciona como um "nome fantasia" que nunca muda, não importa quantos Pods entrem ou saiam da "loja".</br>
+</br>
+<b>Componentes principais</b></br>
+</br>
+O K8s trabalha com o conceito de <b>Cluster</b>, que é um conjunto de máquinas (chamadas de Nodes).</br>
+→ Control Plane (O Cérebro)</br>
+É a parte que toma as decisões globais sobre o cluster (por exemplo, agendar aplicações ou detectar e responder eventos).</br>
+・<b>API Server</b>: A porta de entrada para todos os camandos.</br>
+・<b>Scheduler</b>: Decide em qual maquina (Node) cada container deve rodar, baseando-se em recursos disponiveis.</br>
+</br>
+→ Nodes (Os Trabalhadores)</br>
+São as máquinas onde as aplicações realmente rodam. Cada node possui:</br>
+・<b>Kubelet</b>: Um agente que garante que os containers estejam rodando conforme o planejado.</br>
+・<b>Container Runtime</b>: O software que roda os containers (geralmente o Docker ou containerd).</br>
+</br>
+→ Pods (A menos unidade)</br>
+No kubernetes, você não roda containers diretamente. Você roda <b>Pods</b>.</br>
+・ Um Pod é como uma "concha" que envolve um ou mais containers que compartilham a mesma rede e armazenamento. É a menor unidade que o K8s consegue gerenciar.</br>
 
-
+  
+</details>
 
 
 
