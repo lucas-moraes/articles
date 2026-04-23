@@ -1,47 +1,47 @@
 # AGENTS.md
 
-Static vanilla JS site. Articles are served from a separate GitHub repo.
+Static site built with Quartz 4.x.
 
 ## Project Structure
 
 ```
 articles/
-├── index.html      # Entry point (loads marked via CDN, js/index.js as module)
-├── css/styles.css
-├── js/
-│   ├── global.js   # Article fetching via GitHub API, renders markdown→HTML
-│   └── index.js    # Router (hashless SPA via popstate)
-└── .github/workflows/static.yml  # CI: minifies, creates dist/, deploys to GitHub Pages
+├── quartz/                  # Quartz 4.x source
+│   ├── content/            # Markdown content (source)
+│   │   ├── index.md       # Home page
+│   │   ├── welcome.md
+│   │   ├── nodejs-como-funciona.md
+│   │   └── dev-ops.md
+│   ├── quartz.config.ts    # Quartz configuration
+│   └── public/         # Build output (generated)
+└── .github/workflows/deploy.yml  # CI: builds Quartz, deploys to GitHub Pages
 ```
 
 ## How it works
 
-- `js/global.js` hardcodes `FOLDER_URL` pointing to `lucas-moraes/articles` repo on GitHub API
-- Articles live in that repo's `md/` folder, fetched as base64-encoded content
-- Local `md/` folder is empty/unused
-- Router uses `popstate` (no hash), relies on 404.html fallback for direct article URLs
+- Quartz generates static HTML from markdown in `quartz/content/`
+- Build output in `quartz/public/`
+- Deployed to GitHub Pages at `lucas-moraes.github.io/articles/`
 
 ## Commands
 
-No build needed for local dev. Serve statically:
 ```bash
-python3 -m http.server 8000
-# or
-npx serve .
+# Local dev
+cd quartz && npx quartz serve
+
+# Build
+cd quartz && npx quartz build
 ```
 
 ## CI / Deployment
 
-Push to `main` triggers GitHub Pages deploy via `.github/workflows/static.yml`:
-1. Copies all files to `dist/`
-2. Minifies CSS (`css-minify`) and JS (`terser`)
-3. Rewrites `index.html` refs from `*.css` → `*.min.css` and `./*.js` → `./*.min.js`
-4. Creates `dist/404.html` for SPA fallback (reads `sessionStorage.redirect` and redirects to `/`)
-5. Deploys to GitHub Pages
+Push to `main` triggers `.github/workflows/deploy.yml`:
+1. Install npm dependencies
+2. Build with `npx quartz build`
+3. Deploy to GitHub Pages (gh-pages branch)
 
 ## Key quirks
 
-- **No local build** but CI builds a minified `dist/` — don't edit `dist/` directly
-- Articles fetched from remote GitHub API, not local files
-- 404.html redirect uses `sessionStorage`, not URL parameters
-- `marked` loaded from CDN in `index.html`, not an npm dep
+- Workflow file must be in `.github/workflows/` (root), not in subfolders
+- Content files need frontmatter (title, date, tags)
+- `baseUrl` is configured in `quartz/quartz.config.ts`
