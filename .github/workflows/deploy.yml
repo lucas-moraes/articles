@@ -36,7 +36,7 @@ jobs:
         working-directory: quartz
 
       - name: Build Quartz
-        run: npx quartz build --clean
+        run: npx quartz build
         working-directory: quartz
 
       - name: Upload artifact
