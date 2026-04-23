@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt" dir="ltr"><head><title>NodeJS como funciona</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Articles"/><meta property="og:title" content="NodeJS como funciona"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="NodeJS como funciona"/><meta name="twitter:description" content="NodeJS como funciona Introdução NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor."/><meta property="og:description" content="NodeJS como funciona Introdução NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor."/><meta property="og:image:alt" content="NodeJS como funciona Introdução NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor."/><meta property="twitter:domain" content="lucas-moraes.github.io/articles"/><meta property="og:url" content="https://lucas-moraes.github.io/articles/nodejs-como-funciona"/><meta property="twitter:url" content="https://lucas-moraes.github.io/articles/nodejs-como-funciona"/><link rel="icon" href="./static/icon.png"/><meta name="description" content="NodeJS como funciona Introdução NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor."/><meta name="generator" content="Quartz"/><link href="./index.css" rel="stylesheet" type="text/css" data-persist="true"/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL1VzZXJzL21hY2Jvb2svcHJvamVjdHMvdmFuaWxsYS9hcnRpY2xlcy9xdWFydHovcXVhcnR6L2NvbXBvbmVudHMvc3R5bGVzIiwic291cmNlcyI6WyJtZXJtYWlkLmlubGluZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFHRjtFQUNFOzs7QUFLRjtFQUNFO0VBQ0E7OztBQUlKO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTs7QUFFQTtFQUNFOztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTs7QUFJRjtFQUNFO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi5leHBhbmQtYnV0dG9uIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbG9hdDogcmlnaHQ7XG4gIHBhZGRpbmc6IDAuNHJlbTtcbiAgbWFyZ2luOiAwLjNyZW07XG4gIHJpZ2h0OiAwOyAvLyBOT1RFOiByaWdodCB3aWxsIGJlIHNldCBpbiBtZXJtYWlkLmlubGluZS50c1xuICBjb2xvcjogdmFyKC0tZ3JheSk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0tZGFyayk7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgb3BhY2l0eTogMDtcbiAgdHJhbnNpdGlvbjogMC4ycztcblxuICAmID4gc3ZnIHtcbiAgICBmaWxsOiB2YXIoLS1saWdodCk7XG4gICAgZmlsdGVyOiBjb250cmFzdCgwLjMpO1xuICB9XG5cbiAgJjpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGJvcmRlci1jb2xvcjogdmFyKC0tc2Vjb25kYXJ5KTtcbiAgfVxuXG4gICY6Zm9jdXMge1xuICAgIG91dGxpbmU6IDA7XG4gIH1cbn1cblxucHJlIHtcbiAgJjpob3ZlciA+IC5leHBhbmQtYnV0dG9uIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zaXRpb246IDAuMnM7XG4gIH1cbn1cblxuI21lcm1haWQtY29udGFpbmVyIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBjb250YWluOiBsYXlvdXQ7XG4gIHotaW5kZXg6IDk5OTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNSk7XG5cbiAgJi5hY3RpdmUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgfVxuXG4gICYgPiAjbWVybWFpZC1zcGFjZSB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB0b3A6IDUwJTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgLTUwJSk7XG4gICAgaGVpZ2h0OiA4MHZoO1xuICAgIHdpZHRoOiA4MHZ3O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgICAmID4gLm1lcm1haWQtY29udGVudCB7XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB0cmFuc2Zvcm0tb3JpZ2luOiAwIDA7XG4gICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4xcyBlYXNlO1xuICAgICAgb3ZlcmZsb3c6IHZpc2libGU7XG4gICAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICAgIG1pbi13aWR0aDogMjAwcHg7XG5cbiAgICAgIHByZSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgfVxuXG4gICAgICBzdmcge1xuICAgICAgICBtYXgtd2lkdGg6IG5vbmU7XG4gICAgICAgIGhlaWdodDogYXV0bztcbiAgICAgIH1cbiAgICB9XG5cbiAgICAmID4gLm1lcm1haWQtY29udHJvbHMge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAyMHB4O1xuICAgICAgcmlnaHQ6IDIwcHg7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZ2FwOiA4cHg7XG4gICAgICBwYWRkaW5nOiA4cHg7XG4gICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgYm9yZGVyLXJhZGl1czogNnB4O1xuICAgICAgYm94LXNoYWRvdzogMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIHotaW5kZXg6IDI7XG5cbiAgICAgIC5tZXJtYWlkLWNvbnRyb2wtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAzMnB4O1xuICAgICAgICBoZWlnaHQ6IDMycHg7XG4gICAgICAgIHBhZGRpbmc6IDA7XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0KTtcbiAgICAgICAgY29sb3I6IHZhcigtLWRhcmspO1xuICAgICAgICBib3JkZXItcmFkaXVzOiA0cHg7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgICAgICBmb250LWZhbWlseTogdmFyKC0tYm9keUZvbnQpO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlO1xuXG4gICAgICAgICY6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHZhcigtLWxpZ2h0Z3JheSk7XG4gICAgICAgIH1cblxuICAgICAgICAmOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDFweCk7XG4gICAgICAgIH1cblxuICAgICAgICAvLyBTdHlsZSB0aGUgcmVzZXQgYnV0dG9uIGRpZmZlcmVudGx5XG4gICAgICAgICY6bnRoLWNoaWxkKDIpIHtcbiAgICAgICAgICB3aWR0aDogYXV0bztcbiAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XG4gICAgICAgICAgZm9udC1zaXplOiAxNHB4O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG4iXX0= */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="./prescript.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("./static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://lucas-moraes.github.io/articles/index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://lucas-moraes.github.io/articles/nodejs-como-funciona-og-image.webp"/><meta property="og:image:url" content="https://lucas-moraes.github.io/articles/nodejs-como-funciona-og-image.webp"/><meta name="twitter:image" content="https://lucas-moraes.github.io/articles/nodejs-como-funciona-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="nodejs-como-funciona"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href=".">Articles</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Pesquisar</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Pesquisar por algo" placeholder="Pesquisar por algo"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Tema escuro"><title>Tema escuro</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Tema claro"><title>Tema claro</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Modo leitor"><title>Modo leitor</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorador</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-3" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="./">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>NodeJS como funciona</a></div></nav><h1 class="article-title">NodeJS como funciona</h1><p show-comma="true" class="content-meta"><time datetime="2026-04-23T03:00:00.000Z">23 de abr. de 2026</time><span>Leitura de 14 min</span></p></div></div><article class="popover-hint"><h1 id="nodejs-como-funciona">NodeJS como funciona<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#nodejs-como-funciona" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<h3 id="introdução">Introdução<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#introdução" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor.</p>
+<hr/>
+<details>
+<summary> ❇️ Características principais do NodeJS</summary>
+<ul>
+<li><strong>Ambiente de execução</strong>: Ele utiliza o motor v8 do google (o mesmo usado no navegador do chrome) para interpretar e executar o código JavaScript de forma rápida de um navegador web.</li>
+<li><strong>Back-end com JavaScript</strong>: Permite usar a mesma linguagem , o JavaScript, tanto para o front-end quanto para o back-end, facilitandp o desenvolvimento full-stack.</li>
+<li><strong>Arquitetura assincrona e orientada a eventos</strong>:
+<ul>
+<li>Sua principal característica é a <strong>arquitetura não bloqueante</strong> (non-bloquing I/O) e o uso de um Event loop (Single-thred).</li>
+<li>Isso significa que, em vez de esperar por operações demoradas (como acesso a banco de dados ou arquivos), o NodeJS as coloca em segundo plano e continua processando outras requisições.Quando a operação demorada é concluída, ele é notificado por um evento.</li>
+<li>Essa abordagem o torna muito eficiente para aplicações que exigem <strong>escalabilidade</strong> e <strong>tempo real</strong>, lidando com um grande número de conexões simultâneas (como chats, jogos multiplayer e APIs).</li>
+<li>O segredo está em como o NodeJS lida com as operações de Entrada e Saída (I/O), que são as mais lentas (acesso a banco de dados, leitura/escrita de arquivos, requisições de rede).
+<ul>
+<li><strong>Event Loop (Single Thread)</strong>: é a thread principal onde o seu código JavaScript (JS) é executado. Ele nunca é bloqueado.
+<ul>
+<li>Quando o seu código JS precisa iniciar uma operação lenta (Ex: buscar dados no MongoDB), ele <strong>não espera</strong> pelo resultado. Em vez disso, ele passa essa tarefa para o “segundo plano” e imediatamente <strong>continua executando</strong> o próximo pedaço de código JS.</li>
+</ul>
+</li>
+<li>O <strong>segundo plano (Pool de threads em C++)</strong>: é na verdade um conjunto de threads separadas (conhecido como <strong>Thread Pool</strong>), que são mantidas e gerenciadas pela biblioteca <strong>libuv</strong>.
+<ul>
+<li><strong>libuv</strong> e uma biblioteca de código aberto, escrita em C/C++, que faz parte do coração do NodeJS.</li>
+<li>Quando o Event Loop encontra uma operação de I/O bloqueante (como a leitura de um arquivo no disco), ele a delega para uma das threads nesse <strong>Thread Pool</strong> da libuv.</li>
+<li>Essas threads C++ executam a operação demorada de forma sícrona, fora da thread principal do NodeJS.</li>
+<li>Uma vez que a operação é concluída (o arquivo foi lido ou o dado do banco de dados foi recuperado), a thread C++ envia uma notificação de evento de volta ao Event Loop.</li>
+</ul>
+</li>
+<li><strong>A notificação e o callback</strong>: O event loop recebe a notificação (o “evento”). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex: exibe os dados do banco de dados.)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Exemplo de código:</li>
+</ul>
+<p><img src="https://github.com/user-attachments/assets/0f3b149e-3b51-4e0a-b63b-f689aad31bc9" alt="Image"/></p>
+<p><img src="https://github.com/user-attachments/assets/4b07e31f-7942-431c-9f56-cf9d546bc3dd" alt="Image"/></p>
+<ul>
+<li><strong>NPM (Node Package Manager)</strong>: Possui o maior ecossistema de bibliotecas de código do mundo, o npm, que facilita a instalação, o compartilhamento e o gerenciamneto de módulos e pacotes reutilizáveis.</li>
+</ul>
+</details>
+<hr/>
+<details>  
+<summary> ❇️ V8 engine</summary>
+<p>O motor v8 do google é o coração do NodeJS. Ele é quem realmente transforma o código JavaScript que você escreve em instruções que o computador pode entender e executar de forma extremamente rápida.<br/>
+Relação entre eles pode ser resumida na seguinte divisão de responsabilidades:<br/>
+<strong>NodeJS</strong>: Fornece o ambiente, APIs de I/O (rede, arquivos) e a arquitetura assíncrona (libuv e Event loop) que o V8 não possui por padrão.<br/>
+<strong>V8 Engine</strong>: Executa o Javascript, pega o código JS, compila-o para código de máquina e o executa.<br/>
+Lida com chamadas de função, variáveis e gerenciamento de memória (Garbage collection).<br/>
+V8 é um motor de execução de JavaScript de código aberto escrito em c++.<br/>
+<strong>Sua principal função é garantir a velocidade e a eficiência do código.</strong></p>
+<ul>
+<li>Compilação Just-in-Time (JIT)
+<ul>
+<li>O v8 não é um mero interpretador. Ele usa uma técnica chamada <strong>Compilação JIT</strong> (Just-in-Time) que envolve dois passos principais:
+<ul>
+<li><strong>Ignition</strong> (Interpretador): Inicialmente, o v8 interpreta o código JavaScript rapidamente para começar a execução;</li>
+<li><strong>Turbofan</strong> (Compilador e otimizador): Conforme o código é executado e o V8 percebe que certas partes (funções, loops) são chamadas frequentemente, o Turbofan compila essas partes para <strong>código de máquina</strong> nativo, tornando a execução subsequente muito mais rápida.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Garbage Collection (Gerenciamento de memória)
+<ul>
+<li>O v8 é responsável por alocar e desalocar memória (Heap).
+<ul>
+<li>Ele implementa o <strong>Garbage Collector (GC)</strong>, que monitora a memória.</li>
+<li>Quando o GC percebe que um objeto na memória não pode mais ser acessado pelo programa, ele o remove, <strong>liberando a memória</strong> para novos objetos. Isso evita o vazamento de memória e garante que o NodeJS funcione por longos períodos sem falhas.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Gerenciamento de Call Stack
+<ul>
+<li>O V8 mantém o controle da ordem das funções a serem executadas usando a Call Stack. No NodeJS, esta é a pilha que pertence à single thread do <strong>Event Loop</strong>.
+<br/>
+</li>
+</ul>
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/1f46b6de-fdea-4b50-b0f3-aa060707ac7b"/>
+</li>
+</ul>
+<br/>
+<br/>
+<ul>
+<li>Gerenciamento de memória
+<ul>
+<li>
+<p>A memoria do NodeJS é dividida em duas áreas principais com comportamentos bem diferentes:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>característica</th><th style="text-align:left;">memória Stack (Pilha)</th><th style="text-align:left;">memória Heap (Monte)</th></tr></thead><tbody><tr><td>O que armazena</td><td style="text-align:left;">Tipos primitivos (number, string, boolean) e ponteiros</td><td style="text-align:left;">Objetos, arrays, closures e funções</td></tr><tr><td>Organização</td><td style="text-align:left;">Estrutura LIFO (Last In, First Out). Muito rápida</td><td style="text-align:left;">Estrutura complexa e dinâmica</td></tr><tr><td>Gerenciamento</td><td style="text-align:left;">Automático pelo SO (limpa quando a função acaba</td><td style="text-align:left;">Gerenciado pelo Garbage Collector</td></tr></tbody></table></div>
+</li>
+<li>
+<p>A estrutura do Heeap na V8</p>
+<ul>
+<li>O Heap não é um “balde” único, ele é segmentado para otimizar o trabalho do Garbage Collector:
+<ul>
+<li><strong>New Space (Young Generation)</strong>: É onde a maioria dos objetos nascem. É uma área pequena (1mb a 8mb) projetada para ser limpa com muita frequência. Objetos que sobrevivem a dois ciclos de limpeza aqui são “promovidos” para o Old Space.</li>
+<li><strong>Old Space (Old Generation</strong>: Contém objetos que já existem há mais tempo. É uma área muito maior, e o processo de limpeza aqui é mais custoso e demorado.</li>
+<li><strong>Large Object Space</strong>: Reservado para objetos que são grandes demais para as outras áreas. O Garbage Collector, nunca move esse objetos para evitar custo de processamento.</li>
+</ul>
+</li>
+<li>Como funciona o Garbage Collector (GC)?
+<ul>
+<li>O GC usa um algoritmo chamado <strong>Mark-and-sweep</strong> (Marcar e Varrer). O processo funciona basicamente assim:
+<ol>
+<li><strong>Marking (Marcação)</strong>: O GC começa pelas ‘raízes’ (objetos globais, variáveis na stack) e segue todas as referências para marcar o que está sendo usado.</li>
+<li><strong>Sweeping (Varredura)</strong>: Ele percorre o heap e identifica os objetos que não foram marcados. Esses objetos são considerados ‘lixo’.</li>
+<li><strong>Compacting (Compactação)</strong>: Para evitar que a memória fique cheia de buracos (fragmentação), o GC move os objetos sobreviventes para que fiquem juntos, liberando blocos continuos de memória.</li>
+</ol>
+<ul>
+<li>
+<p><strong>Important!</strong> <strong>Stop-the-world</strong> Quando um Major GC (no Old Space) acontece, a execução do seu código pode ser pausada por alguns milisegundos. É por isso que manter o heap sob controle é vital para a performance.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
+<hr/>
+<details>
+<summary> ❇️ Libuv e Event loop</summary>
+<p><strong>Libuv: O coração assíncrono do NodeJS</strong><br/>
+A Libuv é uma biblioteca multiplataforma de código aberto, escrita em C, que fornece a camada de abstração para operações de Entrada/Saída (I/O) assíncronas. Ela é o que permite ao NodeJS lidar com operações lentas sem bloquear a thread principal do JavaScript.
+<br/>
+Funções principais da libuv:</p>
+<ul>
+<li><strong>Gerenciamento de I/O assíncrono</strong>: A libuv interage com os sistemas operacionais subjacentes para delegar operações de I/O (como sockets de rede, arquivos e timers) de froma não bloqueante.</li>
+<li><strong>Event Loop Implementation</strong>: A Libuv é responsável por implementar e gerenciar o Event Loop em si, atuando como o orquestrador central.</li>
+<li><strong>Thread Pool</strong>: Para operações que são inerentemente bloqueantes nos sitemas operacionais (como a leitura de arquivos muito grandes no disco), a Libuv mantém um <strong>Pool de Threads</strong> separadas. Essas threads nativas (C++) executam o trabalho pesado fora do Event Loop, garantindo que a thread principal do JavaScript continue livre.</li>
+</ul>
+<p><strong>Event Loop: A Single thread orquestradora</strong><br/>
+O Evento loop é o ciclo de execução que gerencia a fila de tarefas e a execução do código JavaScript. Ele opera em uma <strong>única thread</strong> e é a razão pela qual o NodeJS é considerado singlre-threaded para a execução do código JS.<br/>
+O ciclo de vida do Event loop, o event loop opera em um ciclo contínuo,  passando por várias “fases” para processar diferentes tipos de eventos.</p>
+<ul>
+<li><strong>1 - Timers</strong>: Executa callbacks agendadas por <b>setTimeout()</b> e <b>setInterval()</b>;
+<ul>
+<li>Exemplo: O código de um <b>setTimeout(…, 0)</b> é executado aqui;</li>
+</ul>
+</li>
+<li><strong>2 - Pending callbacks</strong>: Executa callbacks pendentes do sistema (exceto I/O, timers, e <b>close</b> callbacks);
+<ul>
+<li>Exemplo: Error de rede (se o SO disparar o erro);</li>
+</ul>
+</li>
+<li><strong>3 - Idle, Prepare</strong>: Usado apenas internamente pelo NodeJS;
+<ul>
+<li>Exemplo: N/A</li>
+<li><b>Obs</b>: Essas fases não são destinadas à execução de código assíncrono escrito pelo usuário (como timers ou callbacks de I/O).</li>
+<li>Fase <b>Prepare</b>:
+<ul>
+<li><ins>Função</ins>: É executada <b>antes</b> que o Event loop inicie seu próximo ciclo principal de I/O, que é a fase <b>Poll</b> (onde a maioria das callbacks de I/O são processadas);</li>
+<li><ins>Uso interno</ins>: Seu principal objetivo é praparar a Libuv para receber novos eventos de I/O. Ela pode ser usada internamente para limpar ou resetar estruturas de dados antes que a Libuv comece a procurar ativamente por eventos concluídos;</li>
+</ul>
+</li>
+<li>Fase <b>Idle</b>:
+<ul>
+<li><ins>Função</ins>: É executada imediatamente após a fase <b>Prepare</b>. Ela atua como um ponto de interrupção para tarefas de baixa prioridade;</li>
+<li><ins>Uso interno</ins>: Ela é usada pela Libuv para executar verificações de rotina ou tarefas de manutenção que não são essenciais para o processamento imediato de eventos, ou que precisam ser executadas somente quando o Event loop está relativamente ocioso (Idle);</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>4 - Poll (Sondagem)</strong>:
+<ol>
+<li><i>Verifca I/O</i>: Busca novas conexões de rede ou dados lidos de arquivos;</li>
+<li><i>Executa callbacks</i>: Executa as callbacks de I/O que foram concluídas no Thread Pool;</li>
+</ol>
+<ul>
+<li>Exemplo: <b>fs.readFile</b> calbacks, <b>neet.Socket</b> callbacks;</li>
+</ul>
+</li>
+<li><strong>5 - Check</strong>: Executa callbacks agendadas por <b>setImmediate()</b>;
+<ul>
+<li>Exemplo: O código de um <b>setImmediate()</b> é executado aqui;</li>
+</ul>
+</li>
+<li><strong>6 - Close callbacks</strong>: Executa callbacks para fechamento de handles;
+<ul>
+<li>Exemplo: <b>socket.on(‘close’, …) ou db.close()</b>;</li>
+</ul>
+</li>
+<li>Microtasks vs Macrotasks
+<ul>
+<li>Além das fases acima(que são <strong>Macrotasks</strong>), existem as <strong>Microtasks</strong>, que têm prioridade de execução e são processadas imediatamente após a conclusão de uma fase completa do Event loop ou após a execução de uma callback sincrona:
+<ul>
+<li><strong>Microtasks (alta prioridade)</strong>: Incluem <strong>Promises</strong> (<b>.then()</b>, <b>.catch()</b>, <b>.finally()</b>) e <b>process.nextTick()</b></li>
+<li><strong>Regra de ouro</strong>: O NodeJS sem pre esvazia toda a fila de <strong>Microtasks</strong> antes de passar para a próxima fase do <strong>Event loop (Macrotasks)</strong>. O <b>process.nextTick()</b> tem a prioridade mais alta de todas, sendo executado antes de qualquer outra Microtask.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
+<hr/>
+<details>
+<summary> ❇️ Desempenho e Concorrência</summary>
+<h3 id="introdução-1">Introdução<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#introdução-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<hr/>
+<p>Como vimos acima, o NodeJS é single-thread, mas o que é thread? Thread (linha de execução) é a menor unidade de processamento dentro de um programa. Ela representa um fluxo de execução independente que o sistema operacional pode agendar e executar. <br/></p>
+<p>De forma simples: <br/>
+<br/>
+⭐️ Um processo pode ter várias threads, e cada thread executa tarefas ao mesmo tempo ou de forma intercalada. <br/>
+<br/></p>
+<p>No NodeJS: <br/>
+🔸 - Existe uma thread principal; <br/>
+🔸 - Ela executa o Event loop; <br/>
+🔸 - Operações pesadas podem bloquear essa thread; <br/>
+<br/>
+Por isso: <br/></p>
+<ul>
+<li>Tarefas de I/O são assíncronas; <br/></li>
+<li>Tarefas de CPU devem usar Worker Threads ou serviços externos; <br/>
+<br/>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th style="text-align:left;">Vantagens</th><th style="text-align:left;">Desvantagens</th></tr></thead><tbody><tr><td style="text-align:left;">Melhor uso do processador</td><td style="text-align:left;">Complexidade maior</td></tr><tr><td style="text-align:left;">Maior desempenho</td><td style="text-align:left;">Risco de condições de corrida (race conditions)</td></tr><tr><td style="text-align:left;">Melhor experiência do usuário</td><td style="text-align:left;">Necessidade de sincronização (locks, mutex)</td></tr></tbody></table></div>
+<br/>
+<p><b>O desempenho do NodeJs está diretamente ligada a arquitetura de execução dos processos da API, podemos colocar o paralelismo e concorrência nessa arquitetura.</b></p>
+<br/>
+<br/>
+<h3 id="️---worker-thread">⛏️ - Worker Thread<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#️---worker-thread" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<hr/>
+<p>No NodeJS, worker thread é um recurso que permite executar tarefas pesadas de CPU em paralelo, sem bloquear a thread principal (onde roda o Event Loop). <br/>
+<br/></p>
+<p>Worker Thread: <br/>
+🟢 - É uma thread real do sistema operacional; <br/>
+🟢 - É criada dentro do mesmo processo do NodeJS; <br/>
+🟢 - Tem seu próprio Event Loop; <br/>
+🟢 - Tem memória isolada da Thread principal; <br/>
+🟢 - Ela se comunica com a thread principal por mensagens; <br/>
+🟢 - Isolamento: Cada worker thread tem sua própria instância V8 (para executar o JS) e sua própria pilha de eventos de I/O, rodando em um processo separado da thread principal; <br/>
+<br/></p>
+<p><b>Comunicação</b></p>
+A comunicação acontece via: <br/>
+<p><span>postMessage()</span><br/>
+<span>//Eventos message</span><br/>
+<span>MessageChannel</span><br/>
+<span>//Casos avançados SharedArrayBuffer</span><br/>
+<br/></p>
+<p>⚠️ - Por padrão, os dados são copiados (clonados), não compartilhados; <br/>
+<br/></p>
+<p><b>Quando usar Worker threads?</b></p>
+Use quando: <br/>
+→ Há tarefas CPU-bound; <br/>
+→ O Event Loop está sendo bloqueado; <br/>
+→ Você precisa de paralelismo real; <br/>
+<br/>
+<p>Não use quando: <br/>
+→ O problema é apenas I/O; <br/>
+→ Uma simples operação assíncrona resolve; <br/>
+→ O overhead de criar threads supera o ganho; <br/></p>
+<br/>
+<br/>
+<h3 id="️---cluster">⚒️ - Cluster<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#️---cluster" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<hr/>
+<p>Cluster é um mecanismo que permite executar múltiplas instâncias do NodeJS (processos) para aproveitar todos os núcleos da CPU e aumentar a escalabilidade de aplicações, principalmente servidores web. <br/>
+Ele é fornecido pelo módulo nativo <b>cluster</b>. <br/>
+O cluster cria processos NodeJS, geralmente por núcleo de CPU. <br/></p>
+<p>Como o cluster funciona? <br/>
+🔵 - Existe um processo master (primary); <br/>
+🔵 - O master cria vários workers (processos filhos); <br/>
+🔵 - Todos os workers:</p>
+<ul>
+<li>Executam o mesmo código;</li>
+<li>Escutam a mesma porta; <br/></li>
+</ul>
+<p>🔵 - O sistema operacional é um processo independente, com memória própria; <br/>
+<br/>
+⚠️ - Cada worker é um processo independente, com memória própria; <br/></p>
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th style="text-align:left;">Vantagens</th><th style="text-align:left;">Desvantagens</th></tr></thead><tbody><tr><td style="text-align:left;">Melhor uso dos núcleos da CPU</td><td style="text-align:left;">Maior uso de memória</td></tr><tr><td style="text-align:left;">Alta disponibilidade</td><td style="text-align:left;">Comunicação entre processos é mais lenta (IPC)</td></tr><tr><td style="text-align:left;">Isolamento (um worker cair não derruba tudo)</td><td style="text-align:left;">Estado não compartilhado (necessita cache externo)</td></tr><tr><td style="text-align:left;">Escala horizontal dentro da mesma máquina</td><td style="text-align:left;"></td></tr></tbody></table></div>
+<br/>
+<br/>
+<p><b> Quando usar cluster?</b></p>
+Use quando: <br/>
+→ sua aplicação é um servidor web; <br/>
+→ há muitas conexões simultâneas; <br/>
+→ você quer escalar em uma única máquina; <br/>
+<br/>
+Evite quando: <br/>
+→ precisa compartilhar muito estado em memória; <br/>
+→ o gargalo é processamento pesado (use Worker Threads); <br/>
+<br/>
+<p>Em resumo, a Thread worker paraleliza, o Cluster escala.</p>
+</details>
+<hr/>
+<details>
+<summary> ❇️ Módulos e Sistema de importação</summary>
+<p>Esses três tópicos são fundamentais para entender como o NodeJS organiza o código e como ele escala de um único arquivo para sistemas complexos. <br/></p>
+<h4 id="commonjs-cjs-vs-es-modules-esm">CommonJS (CJS) vs. ES Modules (ESM)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#commonjs-cjs-vs-es-modules-esm" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Até alguns anos atrás, o NodeJS usava apenas o CommonJS. com a padronização do JavaScript (ES6), o ES Modules foi introduzido e hoje é o padrão da linguagem, embora ambos coexistam no ecossistema Node.
+<br/></p>
+<p><b>Diferenças práticas:</b>
+<br/></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th style="text-align:left;">Características</th><th style="text-align:left;">CommonJS (CJS)</th><th style="text-align:left;">ES Modules (ESM)</th></tr></thead><tbody><tr><td style="text-align:left;">Sintaxe</td><td style="text-align:left;"><span>require()</span> / <span>module.exports</span></td><td style="text-align:left;"><span>import</span> / <span>export</span></td></tr><tr><td style="text-align:left;">Carregamento</td><td style="text-align:left;">Síncrono</td><td style="text-align:left;">Assíncrono</td></tr><tr><td style="text-align:left;">Extensão padrão</td><td style="text-align:left;"><span>js (ou <span>.cjs</span>)</span></td><td style="text-align:left;"><span>.mjs</span> (ou <span>.js</span> com <span>“type”: “module”</span>)</td></tr><tr><td style="text-align:left;">Top-level Await</td><td style="text-align:left;">Não suportado</td><td style="text-align:left;">Suportado (pode usar <span>await</span> fora de funções)</td></tr><tr><td style="text-align:left;">Variáveis de ambiente</td><td style="text-align:left;">Possui <span>__dirname</span> e <span>__filename</span></td><td style="text-align:left;">Não possui (precisa de <span>import.meta.url</span>)</td></tr></tbody></table></div>
+<br/>
+<p><b>Quando usar cada um?</b><br/>
+→ <b>ES Modules:</b> Use em <b>todos os projetos novos.</b> É o padrão oficial, permite <i>Tree Shaking</i> (remover código não usado no build) e funciona nativamente no navegador e no Node.<br/>
+→ <b>CommonJS:</b> Use apenas se estiver mantendo <b>Projetos legados</b> ou se precisar de uma biblioteca muito específica que ainda não tenha migrado para ESM (o que é raro hoje em dia).<br/></p>
+<h4 id="module-resolution-como-o-nodejs-encontra-arquivos">Module Resolution: Como o NodeJS encontra arquivos<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#module-resolution-como-o-nodejs-encontra-arquivos" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>O processo de busco de um módulo segue uma hierarquia rigorosa.
+Quando fazemos &lt; >require(‘xyz’) ou <span>import x from ‘xyz’</span>, o Node segue estes passos:<br/></p>
+<ol>
+<li><b>Módulos Core:</b> Ele verifica se ‘xyz’ é um módulo nativo (ex: <span>fs</span>, <span>path</span>, <span>http</span>). Se for, ele para aqui.</li>
+<li><b>Módulos de arquivo (Relativos/Absolutos):</b> Se começar com <span>“./”</span>, <span>”/”</span> ou <span>“../”</span>, ele busca o arquivo exato no sistema.</li>
+<li><b>Módulos de pacote (<span>node_modules</span>):</b> Se não for um caminho relativo, o Node busca na pasta <b>node_modules</b> do diretorio atual.
+Se não encontrar, ele sobe para o diretório pai e procura na <span>node_modules</span> de lá, repetindo isso até a rais do sistema de arquivos.</li>
+<li><span>package.json</span>: Ao entrar em uma pasta de módulo, ele olha o campo <span>“main”</span> (CJS) ou <span>“exports”</span> (ESM) para saber qual arquivo carregar.<br/></li>
+</ol>
+<h4 id="circular-dependencies-dependências-circulares">Circular dependencies (Dependências circulares)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#circular-dependencies-dependências-circulares" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Uma dependência circular ocorre quando o módulo A importa o módulo B, e o módulo B, por sua vez, importa o módulo A.<br/>
+<b>Como o NodeJS lida com isso?</b><br/>
+O NodeJS não quebra ou trava, mas ele pode retornar um <b>objeto incompleto</b><br/>
+• No CommonJS: Se A importa B enquanto ainda está sendo, B receberá uma versão “inacabada” de A (geralmente um objeto vazio <span>{}</span>).
+Isso causa erros de <span>undefined</span> difíceis de rastrear.<br/></p>
+<h4 id="como-evitar-e-resolver">Como evitar e resolver?<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#como-evitar-e-resolver" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ol>
+<li><b>Refatoração (Extração):</b> Se A e B dependem um do outro, provavelmente existe um código comum a ambos. Mova esse código para um <b>Módulo C</b> que A e B possam importar.</li>
+<li><b>Injeção de dependência:</b> Em vez de B importar A, faça com que A passe o que B precisa como um argumento ou função;</li>
+<li><b>Importação tardia (lazy loading):</b> No CommonJS, você pode remover o <span>require()</span> para dentro de uma função, para que ele só seja executado quando a função for chamada, e não no carregamento do arquivo.
+<b>Dica de outro:</b> Se você encontrar um erro onde uma função importada é <span>undefined</span>, mas o arquivo parece estar correto, verifique imediatamente se não há um cilco de importação entre esses arquivos.</li>
+</ol>
+</details>
+</article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Visão de gráfico</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-2" aria-expanded="true"><h3>Sumário</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#nodejs-como-funciona" data-for="nodejs-como-funciona">NodeJS como funciona</a></li><li class="depth-2"><a href="#introdução" data-for="introdução">Introdução</a></li><li class="depth-2"><a href="#introdução-1" data-for="introdução-1">Introdução</a></li><li class="depth-2"><a href="#️---worker-thread" data-for="️---worker-thread">⛏️ - Worker Thread</a></li><li class="depth-2"><a href="#️---cluster" data-for="️---cluster">⚒️ - Cluster</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Criado com <a href="https://quartz.jzhao.xyz/">Quartz v4.5.2</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script type="application/javascript" data-persist="true">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module" data-persist="true">function E(a,e){if(!a)return;function t(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function n(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}a?.addEventListener("click",t),window.addCleanup(()=>a?.removeEventListener("click",t)),document.addEventListener("keydown",n),window.addCleanup(()=>document.removeEventListener("keydown",n))}function f(a){for(;a.firstChild;)a.removeChild(a.firstChild)}var m=class{constructor(e,t){this.container=e;this.content=t;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),t=this.onMouseMove.bind(this),n=this.onMouseUp.bind(this),o=this.onTouchStart.bind(this),r=this.onTouchMove.bind(this),i=this.onTouchEnd.bind(this),s=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",t),document.addEventListener("mouseup",n),this.container.addEventListener("touchstart",o,{passive:!1}),document.addEventListener("touchmove",r,{passive:!1}),document.addEventListener("touchend",i),window.addEventListener("resize",s),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",t),()=>document.removeEventListener("mouseup",n),()=>this.container.removeEventListener("touchstart",o),()=>document.removeEventListener("touchmove",r),()=>document.removeEventListener("touchend",i),()=>window.removeEventListener("resize",s))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let t=this.createButton("+",()=>this.zoom(.1)),n=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(n),e.appendChild(o),e.appendChild(t),this.container.appendChild(e)}createButton(e,t){let n=document.createElement("button");return n.textContent=e,n.className="mermaid-control-button",n.addEventListener("click",t),window.addCleanup(()=>n.removeEventListener("click",t)),n}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}onTouchStart(e){if(e.touches.length!==1)return;this.isDragging=!0;let t=e.touches[0];this.startPan={x:t.clientX-this.currentPan.x,y:t.clientY-this.currentPan.y}}onTouchMove(e){if(!this.isDragging||e.touches.length!==1)return;e.preventDefault();let t=e.touches[0];this.currentPan={x:t.clientX-this.startPan.x,y:t.clientY-this.startPan.y},this.updateTransform()}onTouchEnd(){this.isDragging=!1}zoom(e){let t=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),n=this.content.getBoundingClientRect(),o=n.width/2,r=n.height/2,i=t-this.scale;this.currentPan.x-=o*i,this.currentPan.y-=r*i,this.scale=t,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){let t=this.content.querySelector("svg").getBoundingClientRect(),n=t.width/this.scale,o=t.height/this.scale;this.scale=1,this.currentPan={x:(this.container.clientWidth-n)/2,y:(this.container.clientHeight-o)/2},this.updateTransform()}},T=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],y;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;y||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let t=y.default,n=new WeakMap;for(let r of e)n.set(r,r.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let c=n.get(s);c&&(s.innerHTML=c)}let r=T.reduce((s,c)=>(s[c]=window.getComputedStyle(document.documentElement).getPropertyValue(c),s),{}),i=document.documentElement.getAttribute("saved-theme")==="dark";t.initialize({startOnLoad:!1,securityLevel:"loose",theme:i?"dark":"base",themeVariables:{fontFamily:r["--codeFont"],primaryColor:r["--light"],primaryTextColor:r["--darkgray"],primaryBorderColor:r["--tertiary"],lineColor:r["--darkgray"],secondaryColor:r["--secondary"],tertiaryColor:r["--tertiary"],clusterBkg:r["--light"],edgeLabelBackground:r["--highlight"]}}),await t.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let r=0;r<e.length;r++){let v=function(){let g=l.querySelector("#mermaid-space"),h=l.querySelector(".mermaid-content");if(!h)return;f(h);let w=i.querySelector("svg").cloneNode(!0);h.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new m(g,h)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},i=e[r],s=i.parentElement,c=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(c),L=c.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),E(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="./postscript.js" type="module" data-persist="true"></script></html>
