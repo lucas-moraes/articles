@@ -1,104 +1,47 @@
-# AGENTS.md - Guidelines for Agentic Coding
+# AGENTS.md
 
-This is a simple vanilla JavaScript static site. There is no build system, testing framework, or linting configuration.
+Static vanilla JS site. Articles are served from a separate GitHub repo.
 
 ## Project Structure
 
 ```
 articles/
-├── index.html      # Main HTML entry point
-├── css/
-│   └── styles.css  # Global styles
+├── index.html      # Entry point (loads marked via CDN, js/index.js as module)
+├── css/styles.css
 ├── js/
-│   ├── global.js   # Core utilities (fetch, article rendering)
-│   └── index.js    # Router initialization
-├── md/             # Markdown articles (fetched from GitHub API)
-└── .github/
-    └── workflows/
-        └── static.yml  # GitHub Pages deployment
+│   ├── global.js   # Article fetching via GitHub API, renders markdown→HTML
+│   └── index.js    # Router (hashless SPA via popstate)
+└── .github/workflows/static.yml  # CI: minifies, creates dist/, deploys to GitHub Pages
 ```
+
+## How it works
+
+- `js/global.js` hardcodes `FOLDER_URL` pointing to `lucas-moraes/articles` repo on GitHub API
+- Articles live in that repo's `md/` folder, fetched as base64-encoded content
+- Local `md/` folder is empty/unused
+- Router uses `popstate` (no hash), relies on 404.html fallback for direct article URLs
 
 ## Commands
 
-### No build system
-This is a static site - no build commands available. Open `index.html` directly in a browser or serve with any static file server:
-
+No build needed for local dev. Serve statically:
 ```bash
-# Using Python
 python3 -m http.server 8000
-
-# Using npx serve
+# or
 npx serve .
 ```
 
-### Running a single test
-No tests exist in this project.
+## CI / Deployment
 
-### Linting/formatting
-No linting or formatting tools configured.
+Push to `main` triggers GitHub Pages deploy via `.github/workflows/static.yml`:
+1. Copies all files to `dist/`
+2. Minifies CSS (`css-minify`) and JS (`terser`)
+3. Rewrites `index.html` refs from `*.css` → `*.min.css` and `./*.js` → `./*.min.js`
+4. Creates `dist/404.html` for SPA fallback (reads `sessionStorage.redirect` and redirects to `/`)
+5. Deploys to GitHub Pages
 
-### Deployment
-The site auto-deploys to GitHub Pages via `.github/workflows/static.yml` on push to main.
+## Key quirks
 
-## Code Style Guidelines
-
-### General Principles
-- Keep code simple and readable
-- Avoid unnecessary dependencies
-- Use vanilla JavaScript (no frameworks)
-
-### JavaScript
-- Use ES6+ features (const/let, arrow functions, async/await)
-- Use semicolons consistently
-- Use double quotes for strings
-- Use camelCase for variable and function names
-- Use PascalCase for class-like structures (if any)
-- Always use strict mode or modules (use `export`/`import`)
-- Prefer async/await over raw promises
-- Handle errors with try/catch blocks
-
-### CSS
-- Use meaningful class names (lowercase, kebab-case)
-- Use CSS custom properties for colors and reusable values
-- Keep selectors simple and specific
-- Use flexbox/grid for layout
-- Include fallbacks for older browsers when using modern properties
-
-### HTML
-- Use semantic HTML5 elements (header, nav, main, article, footer)
-- Include appropriate meta tags
-- Use lowercase for tags and attributes
-- Quote attribute values
-
-### Naming Conventions
-- Files: lowercase, kebab-case (e.g., `global.js`, `styles.css`)
-- Functions/variables: camelCase
-- Constants: UPPER_SNAKE_CASE
-- CSS classes: kebab-case
-
-### Error Handling
-- Always use try/catch for async operations
-- Log errors to console with descriptive messages
-- Show user-friendly error messages in the UI
-- Never expose sensitive information in error messages
-
-### Git Conventions
-- Use conventional commits: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`
-- Keep commits atomic and focused
-- Write descriptive commit messages
-
-### Browser Compatibility
-- Target modern browsers (last 2 versions)
-- Avoid polyfills unless specifically needed
-
-## Dependencies
-
-This project intentionally has no npm dependencies. External libraries are loaded via CDN in HTML:
-- `marked` - Markdown parsing (loaded in index.html)
-
-## Important Notes
-
-1. **No local build required** - Just edit the source files directly
-2. **JavaScript modules** - Use ES6 modules with `type="module"` in script tags
-3. **API integration** - Articles are fetched from a GitHub repository via the GitHub API (configured in `js/global.js`)
-4. **CORS considerations** - The GitHub API may have rate limits; testing should be done locally or with proper authentication
+- **No local build** but CI builds a minified `dist/` — don't edit `dist/` directly
+- Articles fetched from remote GitHub API, not local files
+- 404.html redirect uses `sessionStorage`, not URL parameters
+- `marked` loaded from CDN in `index.html`, not an npm dep
