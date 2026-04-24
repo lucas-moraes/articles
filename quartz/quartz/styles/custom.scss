@@ -1,3 +1,302 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+:root {
+  --apple-black: #000000;
+  --apple-light-gray: #f5f5f7;
+  --apple-near-black: #1d1d1f;
+  --apple-blue: #0071e3;
+  --apple-link-blue: #0066cc;
+  --apple-link-bright: #2997ff;
+  --apple-white: #ffffff;
+  --apple-dark-surface-1: #272729;
+  --apple-dark-surface-2: #262628;
+  --apple-dark-surface-3: #28282a;
+  --apple-dark-surface-4: #2a2a2d;
+  --apple-dark-surface-5: #242426;
+  --apple-card-shadow: rgba(0, 0, 0, 0.22) 3px 5px 30px 0px;
+
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  letter-spacing: -0.374px;
+  line-height: 1.47;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.28px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.07;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.14;
+  letter-spacing: 0.196px;
+}
+
+a {
+  color: var(--apple-link-blue);
+  font-weight: 600;
+  letter-spacing: -0.224px;
+  line-height: 1.43;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid var(--apple-blue);
+    outline-offset: 2px;
+  }
+}
+
+.page {
+  margin: 0 auto;
+}
+
+.page article {
+  max-width: 100%;
+}
+
+.article-preview {
+  background: var(--apple-light-gray);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: var(--apple-card-shadow);
+}
+
+.btn-primary {
+  background: var(--apple-blue);
+  color: var(--apple-white);
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: normal;
+  display: inline-block;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    background: #0060ce;
+    text-decoration: none;
+    transform: scale(1.02);
+  }
+
+  &:focus {
+    outline: 2px solid var(--apple-blue);
+    outline-offset: 2px;
+  }
+}
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 16px;
+  border-radius: 980px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: normal;
+  transition: all 0.2s ease;
+
+  &.btn-outline {
+    background: transparent;
+    border: 1px solid var(--apple-link-blue);
+    color: var(--apple-link-blue);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &.btn-filled {
+    background: var(--apple-blue);
+    color: var(--apple-white);
+
+    &:hover {
+      background: #0060ce;
+    }
+  }
+}
+
+nav {
+  height: 48px;
+  background: #004488ba;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  a {
+    color: var(--apple-white);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.12px;
+    padding: 0 1rem;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      opacity: 0.8;
+    }
+  }
+}
+
+footer {
+  color: var(--apple-white);
+  padding: 2rem 0;
+  margin-top: 4rem;
+
+  a {
+    color: var(--apple-link-bright);
+    font-size: 14px;
+  }
+}
+
+.footer-light {
+  background: var(--apple-light-gray);
+  color: var(--apple-near-black);
+
+  a {
+    color: var(--apple-link-blue);
+    font-size: 14px;
+  }
+}
+
+.dark-section {
+  background: var(--apple-black);
+  color: var(--apple-white);
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--apple-white);
+  }
+
+  p {
+    color: var(--apple-white);
+  }
+
+  a {
+    color: var(--apple-link-bright);
+  }
+}
+
+.light-section {
+  background: var(--apple-light-gray);
+  color: var(--apple-near-black);
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--apple-near-black);
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.hero {
+  background: var(--apple-black);
+  color: var(--apple-white);
+  padding: 6rem 0;
+  text-align: center;
+
+  h1 {
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.07;
+    letter-spacing: -0.28px;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.19;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.tag-link {
+  background: var(--apple-light-gray);
+  color: var(--apple-link-blue);
+  padding: 4px 10px;
+  border-radius: 11px;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+
+  &:hover {
+    background: #e8e8ed;
+    text-decoration: none;
+  }
+}
+
+::selection {
+  background: var(--apple-blue);
+  color: var(--apple-white);
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+}

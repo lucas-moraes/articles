@@ -1,9 +1,3 @@
----
-title: Welcome
-date: 2026-04-23
-tags: []
----
-
 # Bem-vindo ao Calcite
 
 Este é o seu banco de conhecimentos local.
@@ -13,4 +7,4 @@ Este é o seu banco de conhecimentos local.
 - **Graph View**: Veja como suas notas se conectam.
 - **Links Bi-direcionais**: Use `[[Nome da Nota]]` para criar conexões.
 
-Tente criar uma nova nota e vincular a!
+Tente criar uma nova nota e vincular a esta!
