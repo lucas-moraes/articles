@@ -6,28 +6,58 @@
       <description>Últimas 10 notas on Articles</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>welcome</title>
-    <link>https://lucas-moraes.github.io/articles/welcome</link>
-    <guid>https://lucas-moraes.github.io/articles/welcome</guid>
-    <description><![CDATA[ Bem-vindo ao Calcite Este é o seu banco de conhecimentos local. Recursos Principais Markdown: Suporte total a GFM. ]]></description>
-    <pubDate>Thu, 23 Apr 2026 20:08:53 GMT</pubDate>
+    <title>Desempenho-e-concorrencia</title>
+    <link>https://lucas-moraes.github.io/articles/nodejs/Desempenho-e-concorrencia</link>
+    <guid>https://lucas-moraes.github.io/articles/nodejs/Desempenho-e-concorrencia</guid>
+    <description><![CDATA[ Desempenho e Concorrência 0-NodeJS-introducao NodeJS é single-thread, mas o que é thread? Thread (linha de execução) é a menor unidade de processamento dentro de um programa. ]]></description>
+    <pubDate>Mon, 27 Apr 2026 03:00:00 GMT</pubDate>
   </item><item>
-    <title>DevOps</title>
-    <link>https://lucas-moraes.github.io/articles/dev-ops</link>
-    <guid>https://lucas-moraes.github.io/articles/dev-ops</guid>
+    <title>Libuv-event-loop</title>
+    <link>https://lucas-moraes.github.io/articles/nodejs/Libuv-e-event-loop</link>
+    <guid>https://lucas-moraes.github.io/articles/nodejs/Libuv-e-event-loop</guid>
+    <description><![CDATA[ Libuv e Event loop 0-NodeJS-introducao Libuv: O coração assíncrono do NodeJS. ]]></description>
+    <pubDate>Mon, 27 Apr 2026 03:00:00 GMT</pubDate>
+  </item><item>
+    <title>modulos-e-importacao</title>
+    <link>https://lucas-moraes.github.io/articles/nodejs/Modulos-e-importacao</link>
+    <guid>https://lucas-moraes.github.io/articles/nodejs/Modulos-e-importacao</guid>
+    <description><![CDATA[ Módulos e Sistema de importação 0-NodeJS-introducao Esses três tópicos são fundamentais para entender como o NodeJS organiza o código e como ele escala de um único arquivo para sistemas complexos. ]]></description>
+    <pubDate>Mon, 27 Apr 2026 03:00:00 GMT</pubDate>
+  </item><item>
+    <title>NodeJS-introducao</title>
+    <link>https://lucas-moraes.github.io/articles/nodejs/0-NodeJS-introducao</link>
+    <guid>https://lucas-moraes.github.io/articles/nodejs/0-NodeJS-introducao</guid>
+    <description><![CDATA[ NodeJS Introdução NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor. ]]></description>
+    <pubDate>Sun, 26 Apr 2026 03:00:00 GMT</pubDate>
+  </item><item>
+    <title>V8-engine</title>
+    <link>https://lucas-moraes.github.io/articles/nodejs/v8-engine</link>
+    <guid>https://lucas-moraes.github.io/articles/nodejs/v8-engine</guid>
+    <description><![CDATA[ V8 engine 0-NodeJS-introducao O motor v8 do google é o coração do NodeJS. ]]></description>
+    <pubDate>Sun, 26 Apr 2026 03:00:00 GMT</pubDate>
+  </item><item>
+    <title>Devops-introducao</title>
+    <link>https://lucas-moraes.github.io/articles/devops/0-Devops-introducao</link>
+    <guid>https://lucas-moraes.github.io/articles/devops/0-Devops-introducao</guid>
     <description><![CDATA[ DevOps O termo DevOps surge da combinação das palavras “Desenvolvimento” (Development) e “Operações” (Operations). ]]></description>
-    <pubDate>Thu, 23 Apr 2026 03:00:00 GMT</pubDate>
+    <pubDate>Fri, 24 Apr 2026 03:00:00 GMT</pubDate>
+  </item><item>
+    <title>Docker</title>
+    <link>https://lucas-moraes.github.io/articles/devops/Docker</link>
+    <guid>https://lucas-moraes.github.io/articles/devops/Docker</guid>
+    <description><![CDATA[ Docker 0-Devops-introducao Antes do Docker, tínhamos o clássico problema: “Na minha máquina funciona, mas no servidor não”. ]]></description>
+    <pubDate>Fri, 24 Apr 2026 03:00:00 GMT</pubDate>
+  </item><item>
+    <title>Kubernetes</title>
+    <link>https://lucas-moraes.github.io/articles/devops/Kubernetes</link>
+    <guid>https://lucas-moraes.github.io/articles/devops/Kubernetes</guid>
+    <description><![CDATA[ Kubernetes (K8’s) 0-Devops-introducao O segredo do K8’s não é a tecnologia de containers, mas o seu loop de controle (Reconciliation loop). ]]></description>
+    <pubDate>Fri, 24 Apr 2026 03:00:00 GMT</pubDate>
   </item><item>
     <title>Home</title>
     <link>https://lucas-moraes.github.io/articles/</link>
     <guid>https://lucas-moraes.github.io/articles/</guid>
-    <description><![CDATA[ Welcome This is your digital garden. Browse the notes in the sidebar or explore the graph view. Getting Started This site is built with Quartz 4.x. ]]></description>
-    <pubDate>Thu, 23 Apr 2026 03:00:00 GMT</pubDate>
-  </item><item>
-    <title>NodeJS como funciona</title>
-    <link>https://lucas-moraes.github.io/articles/nodejs-como-funciona</link>
-    <guid>https://lucas-moraes.github.io/articles/nodejs-como-funciona</guid>
-    <description><![CDATA[ NodeJS como funciona Introdução NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor. ]]></description>
+    <description><![CDATA[ 🔸 Bem vindo ao meu articles digital garden. ]]></description>
     <pubDate>Thu, 23 Apr 2026 03:00:00 GMT</pubDate>
   </item>
     </channel>

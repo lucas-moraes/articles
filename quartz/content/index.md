@@ -4,16 +4,9 @@ date: 2026-04-23
 tags: []
 ---
 
-# Welcome
+# 🔸 Bem vindo ao meu articles digital garden.
 
-This is your digital garden. Browse the notes in the sidebar or explore the graph view.
+A idéia do digital garden é montar notas encadeadas bidirecionais como um mapa mental, dessa forma é possível transcrever resumos dos estudados.
 
-## Getting Started
-
-This site is built with Quartz 4.x.
-
-## Features
-
-- **Markdown**: Full GFM support
-- **Graph View**: See how your notes connect
-- **Bi-directional Links**: Use `[[Note Name]]` to create connections
+[[0-NodeJS-introducao]]
+[[0-Devops-introducao]]
