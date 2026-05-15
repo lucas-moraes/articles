@@ -4,7 +4,7 @@ date: 2026-04-24
 tags: [devops]
 ---
 
-### DevOps
+### DevOps introdução
 
 O termo DevOps surge da combinação das palavras "Desenvolvimento" (Development) e "Operações" (Operations).  
 Mais do que uma ferramenta ou um cargo específico, **DevOps é uma cultura e uma filosofia de trabalho** que visa integrar as equipes que criam o software com as equipes que o mantêm rodando.  
@@ -34,9 +34,9 @@ Onde o código "mora" e é compartilhado.
 
 ✯ **CI/CD (Integração e Entrega Contínua)**. 
 As ferramentas que pegam o código, testam e levam para o "ar".  
-⇢ **Jenkins:** O "vovô" das ferramentas, extremamente flexível e baseado em plugins.  
-⇢ **GitHub Actions:** Muito popular hoje por já estar integrado ao repositório.  
-⇢ **CircleCI / Azure DevOps:** Opções robustas para pipelines automatizados.  
+⇢ **[[Jenkins]]:** O "vovô" das ferramentas, extremamente flexível e baseado em plugins.  
+⇢ **[[Github-actions]]:** Muito popular hoje por já estar integrado ao repositório.  
+⇢ **[[Circle-ci]] / [[Azure-devops]]:** Opções robustas para pipelines automatizados.  
 
 ✯ **Containerização e Orquestração**. 
 Para garantir que o software rode do mesmo jeito no seu PC e no servidor.  

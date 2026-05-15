@@ -10,7 +10,7 @@ tags: [nodejs]
 NodeJS é single-thread, mas o que é thread? Thread (linha de execução) é a menor unidade de processamento dentro de um programa. Ela representa um fluxo de execução independente que o sistema operacional pode agendar e executar.  
 
 De forma simples:  
-⭐️ Um processo pode ter várias threads, e cada thread executa tarefas ao mesmo tempo ou de forma intercalada.  
+⭐️ Um processo pode ter várias threads, e cada thread executa tarefas ao mesmo tempo ou de forma intercalada.
 
 No NodeJS:  
 🔸 - Existe uma thread principal;  

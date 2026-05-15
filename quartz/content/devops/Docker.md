@@ -5,7 +5,6 @@ tags: [devops]
 ---
 
 ## Docker
-[[0-Devops-introducao]]
 
 Antes do Docker, tínhamos o clássico problema: "Na minha máquina funciona, mas no servidor não". Isso acontecia por diferenças de versões de software e sistemas.  
 

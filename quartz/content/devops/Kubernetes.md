@@ -5,7 +5,6 @@ tags: [devops]
 ---
 
 ### Kubernetes (K8's)
-[[0-Devops-introducao]]
 
 
 ### 🟣 Introdução
