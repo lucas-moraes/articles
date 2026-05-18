@@ -3,7 +3,6 @@ title: Network introcução
 date: 2026-05-15
 tags: [network]
 ---
-[[hub-switch-roteador]] [[modelo-osi]] [[modelo-tcp-ip]]
 
 ### Network introdução
 

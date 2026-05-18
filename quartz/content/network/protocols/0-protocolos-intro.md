@@ -3,7 +3,6 @@ title: Protocolos-intro
 date: 2026-05-15
 tags: [protocols, network]
 ---
-[[HTTP-HTTPS]] [[DNS]] [[FTP]] [[SMTP-POP3-IMAP]] [[SSH]] [[TCP]]
 
 ### Protocolos de rede
 Os protocolos de rede são conjuntos de regras e padrões que permitem que dispositivos diferentes "falem a mesma língua" e troquem dados de forma organizada. Eles atuam em diferentes níveis, desde a fiação física até a interface que você vê no seu navegador.  

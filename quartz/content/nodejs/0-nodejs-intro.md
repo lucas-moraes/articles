@@ -37,5 +37,3 @@ Exemplo de código:
 
 **NPM (Node Package Manager)**: Possui o maior ecossistema de bibliotecas de código do mundo, o npm, que facilita a instalação, o compartilhamento e o gerenciamneto de módulos e pacotes reutilizáveis.
 
-[[V8-engine]] [[Libuv-e-event-loop]] [[Desempenho-e-concorrencia]] [[Modulos-e-importacao]]
-

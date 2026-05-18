@@ -34,14 +34,14 @@ Onde o código "mora" e é compartilhado.
 
 ✯ **CI/CD (Integração e Entrega Contínua)**. 
 As ferramentas que pegam o código, testam e levam para o "ar".  
-⇢ **[[Jenkins]]:** O "vovô" das ferramentas, extremamente flexível e baseado em plugins.  
-⇢ **[[Github-actions]]:** Muito popular hoje por já estar integrado ao repositório.  
-⇢ **[[Circle-ci]] / [[Azure-devops]]:** Opções robustas para pipelines automatizados.  
+⇢ **Jenkins:** O "vovô" das ferramentas, extremamente flexível e baseado em plugins.  
+⇢ **Github-actions:** Muito popular hoje por já estar integrado ao repositório.  
+⇢ **Circle CI / Azure-devops:** Opções robustas para pipelines automatizados.  
 
 ✯ **Containerização e Orquestração**. 
 Para garantir que o software rode do mesmo jeito no seu PC e no servidor.  
-⇢ **[[Docker]]:** Cria o "container" (o pacote com tudo que o app precisa).  
-⇢ **[[Kubernetes]] (K8s):** O maestro que gerencia centenas ou milhares de containers ao mesmo tempo.  
+⇢ **Docker:** Cria o "container" (o pacote com tudo que o app precisa).  
+⇢ **Kubernetes (K8s):** O maestro que gerencia centenas ou milhares de containers ao mesmo tempo.  
 
 ✯ **Infraestrutura como Código (IaC)**  
 Em vez de clicar em botões no painel da nuvem, você escreve um arquivo de texto que cria os servidores para você.  
@@ -53,5 +53,3 @@ Para saber se o site caiu ou se está lento antes que o cliente reclame.
 ⇢ **Grafana / Prometheus:** Para métricas e gráficos em tempo real.  
 ⇢ **ELK Stack (Elasticsearch, Logstash, Kibana):** Para analisar logs (o "histórico" do que acontece no sistema).  
 ⇢ **New Relic / Datadog:** Monitoramento completo de performance (APM).  
-
-[[Docker]] [[Kubernetes]]

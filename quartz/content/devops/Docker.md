@@ -39,7 +39,7 @@ Imagens gigantes são lentas para transferir. Técnicas avançadas incluem:
 ### Orquestração
 Quando você tem centenas de containers, o Docker sozinho não basta. É aqui que entram os orquestradores:
 ・**Docker Swarm:** A solução nativa do Docker para clusters (mais simples).
-・**[[Kubernetes]] (K8s):**  O padrão da indústria para gerenciar containers em escala global, cuidando de auto-scaling e auto-recuperação.
+・**Kubernetes (K8s):**  O padrão da indústria para gerenciar containers em escala global, cuidando de auto-scaling e auto-recuperação.
 
 ### Segurança
 ・**Rootless mode:** Rodar o Docker sem privilégios de administrador.
