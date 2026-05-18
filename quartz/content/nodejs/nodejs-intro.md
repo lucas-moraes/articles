@@ -5,7 +5,7 @@ tags: [nodejs]
 ---
 
 
-### NodeJS Introdução
+### NodeJS introdução
 
 NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor.
 
