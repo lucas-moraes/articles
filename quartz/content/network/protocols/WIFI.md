@@ -2,6 +2,7 @@
 title: WIFI
 date: 2026-05-19
 tags: [protocols]
+
 ---
 
 ### Wi-Fi

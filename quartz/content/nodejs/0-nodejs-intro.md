@@ -1,15 +1,15 @@
 ---
-title: NodeJS-introducao
+title: 0-Introdução
 date: 2026-04-26
 tags: [nodejs]
----
 
+---
 
 ### NodeJS introdução
 
 NodeJS não é uma linguagem de programação nem um framework, mas sim um ambiente de execução JavaScript, que antes era usado primariamente apneas no lado do cliente (browser), possa ser usado também do lado do servidor.
 
-**Características principais do NodeJS**. 
+**Características principais do NodeJS**.
 
 - **Ambiente de execução**: Ele utiliza o motor v8 do google (o mesmo usado no navegador do chrome) para interpretar e executar o código JavaScript de forma rápida de um navegador web.
 - **Back-end com JavaScript**: Permite usar a mesma linguagem , o JavaScript, tanto para o front-end quanto para o back-end, facilitandp o desenvolvimento full-stack.
@@ -26,14 +26,12 @@ O **segundo plano (Pool de threads em C++)**: é na verdade um conjunto de threa
 Quando o Event Loop encontra uma operação de I/O bloqueante (como a leitura de um arquivo no disco), ele a delega para uma das threads nesse **Thread Pool** da libuv.  
 Essas threads C++ executam a operação demorada de forma sícrona, fora da thread principal do NodeJS.  
 Uma vez que a operação é concluída (o arquivo foi lido ou o dado do banco de dados foi recuperado), a thread C++ envia uma notificação de evento de volta ao Event Loop.
-**A notificação e o callback**: O event loop recebe a notificação (o "evento"). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex: exibe os dados do banco de dados.). 
+**A notificação e o callback**: O event loop recebe a notificação (o "evento"). Ele pega a função de callback (o código JS que você escreveu para lidar com o resultado) e a coloca na fila para ser executada. Quando o Event loop terminar as tarefas atuais, ele processa essa calback na sua única thread, e é aí que você manipula o resultado da operação (ex: exibe os dados do banco de dados.).
 
 Exemplo de código:
 
 ![Image](https://github.com/user-attachments/assets/0f3b149e-3b51-4e0a-b63b-f689aad31bc9)
 
-
 ![Image](https://github.com/user-attachments/assets/4b07e31f-7942-431c-9f56-cf9d546bc3dd)
 
 **NPM (Node Package Manager)**: Possui o maior ecossistema de bibliotecas de código do mundo, o npm, que facilita a instalação, o compartilhamento e o gerenciamneto de módulos e pacotes reutilizáveis.
-

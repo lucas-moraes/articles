@@ -1,7 +1,8 @@
 ---
 title: Home
 date: 2026-04-23
-tags: [network, nodejs, devops,]
+tags: [development, concept, nodejs, devops, network, protocols, database]
+
 ---
 
 # 🔸 Bem vindo ao meu articles digital garden.
