@@ -67,7 +67,7 @@ Não use quando:
 ### ⚒️ - Cluster
 
 Cluster é um mecanismo que permite executar múltiplas instâncias do NodeJS (processos) para aproveitar todos os núcleos da CPU e aumentar a escalabilidade de aplicações, principalmente servidores web.  
-Ele é fornecido pelo módulo nativo <b>cluster</b>.  
+Ele é fornecido pelo módulo nativo **cluster**.  
 O cluster cria processos NodeJS, geralmente por núcleo de CPU.
 
 Como o cluster funciona?  
