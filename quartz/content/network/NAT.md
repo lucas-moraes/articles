@@ -1,7 +1,7 @@
 ---
 title: NAT
 date: 2026-05-20
-tags: [network]
+tags: [br,network]
 
 ---
 

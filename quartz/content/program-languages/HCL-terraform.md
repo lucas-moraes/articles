@@ -1,7 +1,7 @@
 ---
 title: HCL-terraform
 date: 2026-05-28
-tags: [development]
+tags: [br, development]
 #
 ---
 

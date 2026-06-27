@@ -1,7 +1,7 @@
 ---
 title: Infra-as-code
 date: 2026-05-27
-tags: [concept]
+tags: [br,concept]
 #
 ---
 

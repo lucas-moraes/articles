@@ -1,7 +1,7 @@
 ---
 title: Banco-de-dados-relacionais
 date: 2026-06-24
-tags: [database]
+tags: [br,database]
 #
 ---
 

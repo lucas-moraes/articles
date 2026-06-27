@@ -1,7 +1,7 @@
 ---
 title: LangChain
 date: 2026-06-09
-tags: [ai]
+tags: [br,ai]
 #
 ---
 

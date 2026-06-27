@@ -1,7 +1,7 @@
 ---
 title: Modelo TCP/IP
 date: 2026-05-15
-tags: [network]
+tags: [br, network]
 
 ---
 

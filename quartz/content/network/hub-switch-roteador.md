@@ -1,7 +1,7 @@
 ---
 title: Hub, Switch e Roteador - Equipamentos
 date: 2026-05-15
-tags: [network]
+tags: [br,network]
 
 ---
 

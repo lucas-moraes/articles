@@ -1,7 +1,7 @@
 ---
 title: Terraform
 date: 2026-05-27
-tags: [devops]
+tags: [br,devops]
 #
 ---
 

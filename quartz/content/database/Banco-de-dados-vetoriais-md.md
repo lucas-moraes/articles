@@ -1,7 +1,7 @@
 ---
 title: Banco de dados vetoriais
 date: 2026-06-23
-tags: [database, ai]
+tags: [br,database, ai]
 #
 ---
 

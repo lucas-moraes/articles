@@ -1,7 +1,7 @@
 ---
 title: Desempenho-e-concorrencia
 date: 2026-04-27
-tags: [nodejs]
+tags: [br, nodejs]
 
 ---
 

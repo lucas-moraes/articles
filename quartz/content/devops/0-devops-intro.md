@@ -1,7 +1,7 @@
 ---
 title: 0-Introdução
 date: 2026-04-24
-tags: [devops]
+tags: [br,devops]
 
 ---
 

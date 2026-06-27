@@ -1,10 +1,10 @@
-* * *
+---
 
 title: Banco de dados  
 date: 2026-05-22  
-tags: [database, ai]
+tags: [br, database, ai]
 
-* * *
+---
 
 ### Banco de dados
 
