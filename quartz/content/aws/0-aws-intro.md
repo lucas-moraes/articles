@@ -38,7 +38,7 @@ With this framework, you can assess and improve your cloud-based architectures a
 
 * ~~Introduction~~
 * ~~EC2~~
-* VPC
+* ~~VPC~~
 * IAM
 * Auto-Scaling
 * S3
